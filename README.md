@@ -1,6 +1,6 @@
-# shoper
+# O2O
 
-> A Vue.js project
+> 附近商家V2.0
 
 ## Build Setup
 
