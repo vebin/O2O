@@ -1,8 +1,8 @@
 {
-  "name": "shoper",
-  "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "小辉 <1150322487@qq.com>",
+  "name": "O2O",
+  "version": "2.0.0",
+  "description": "附近商家",
+  "author": "YSH,WXJ",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
