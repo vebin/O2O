@@ -4,7 +4,7 @@
     <search-header></search-header>
     <div class="entries">
       <a :href="`#/ShopTypeDetail/${item.Id}/${item.Typedescription}`" v-for="(item,index) in entries">
-        <nav-item :data="item"></nav-item>  
+        <nav-item :data="item"></nav-item>
       </a>
     </div>
     <div :class="advert" v-if="advs.length">
@@ -112,9 +112,11 @@ export default {
         this.renderShops(cache)
       } else {                       // 判断是不是客户端 进行不同的定位
         if (this.setApp()==='other') {
-          this.getlocation()
+          this.webGetLocation() // dev
+          // this.getlocation() // prod
         } else {
-          this.webGetLocation()
+          this.getlocation() // dev
+          // this.webGetLocation() // prod
         }
       }
     }
@@ -232,7 +234,7 @@ export default {
             _this.setdata({lng: `${wxLocation.lng}`, lat: `${wxLocation.lat}`})
             _this.renderNearbyShops()
           },
-          cancel: function () { 
+          cancel: function () {
             _this.loading = false
             _this.loamore = true
             _this.cancelLocation = true
@@ -280,14 +282,14 @@ export default {
       }
     },
     goTop (){
-      if(!navigator.userAgent.match(/iphone/i) && this.Container.scrollTop > 500) 
+      if(!navigator.userAgent.match(/iphone/i) && this.Container.scrollTop > 500)
       this.Container.scrollTop = 500;
       this.moving(0);
     },
     moving (n){
       let that = this;
       if(this.Container.scrollTop == n){
-          this.scrollAnimation && cancelAnimationFrame(this.scrollAnimation);  
+          this.scrollAnimation && cancelAnimationFrame(this.scrollAnimation);
           return;
       }else{
           var speed = (n - this.Container.scrollTop)/8;
@@ -295,7 +297,7 @@ export default {
           this.Container.scrollTop = this.Container.scrollTop + speed;
           this.scrollAnimation = requestAnimationFrame(function(){
               that.moving(n);
-          });   
+          });
       }
     }
   }
@@ -312,7 +314,7 @@ export default {
     overflow: auto;
     -webkit-overflow-scrolling:touch;
     padding-bottom: 50px;
-    box-sizing: border-box; 
+    box-sizing: border-box;
   }
   .entries{
     padding:5px 0 0;
@@ -324,15 +326,15 @@ export default {
     float: left;
     width: 20%;
     box-sizing: border-box;
-  } 
+  }
   .advert-max,.advert-flex{
     margin-top:10px;
     overflow: hidden;
     background: #fff
-  } 
+  }
   .adv-item{
-    box-sizing: border-box; 
-    border-right: 1px solid #eee  
+    box-sizing: border-box;
+    border-right: 1px solid #eee
   }
   .advert-flex{
     display: flex;
