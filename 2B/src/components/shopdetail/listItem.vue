@@ -1,7 +1,7 @@
 <template>
   <li class="main">
     <figure>
-      <img src="" alt="">
+      <img :src="imgSrc" alt="">
     </figure>
     <div class="content">
       <h6>{{type}}</h6>
@@ -14,62 +14,69 @@ export default {
   // props: ['typetext', 'index'],
   data () {
     return {
-      type: '钣金喷漆',
+      type: '换车胎换车胎换车胎换车胎换车胎换车胎车胎换车胎换车胎换车胎换车胎换车胎换车胎车胎',
       price: '¥ 120',
+      imgSrc: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=882642063,4115591772&fm=26&gp=0.jpg'
     }
   },
   created () {
-    if (this.articleCache.length > 60) {
-      this.subStrarticleCache()
-      this.seeMore = true
-    }else {
-      this.article = this.articleCache
-    }
+
   },
   methods: {
-    more () {
-      this.article = this.articleCache
-      this.toggle()
-    },
-    back () {
-      this.subStrarticleCache()
-      this.toggle()
-    },
-    toggle () {
-      this.seeMore = !this.seeMore
-      this.takeBack = !this.takeBack
-    },
-    subStrarticleCache () {
-      this.article = `${this.articleCache.substr(0, 60)}...`
-    }
+
   }
 }
 </script>
 <style scoped>
-  .main {
+  li {
+    list-style-type:none;
     background: #fff;
-    padding: 10px 15px 0;
-    margin-top: 10px;
+    position: relative;
+    padding-left: 105px;
   }
-  .main h5 {
-    font-size: 18px;
-    color: #222222;
-    line-height: 27px;
+  li::before {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    content: "";
+    width: 100%;
+    height: 1px;
+    background: #E5E5E5;
+    transform: scaleY(0.5);
   }
-  .main p {
-    margin-top: 5px;
-    font-size: 14px;
-    color: #666666;
-    line-height: 22px;
-    padding-bottom: 15px;
+  li figure {
+    position: absolute;
+    left: 0;
+    top: 15px;
+    width: 90px;
+    height: 60px;
   }
-  .main .more, .main .back {
-    color: #FF6600;
-  }
-  .main .back {
+  img {
     display: block;
-    line-height: 44px;
-    height: 29px;
-    text-align: center;
+    width: 100%;
+    height: 100%;
+  }
+  .content {
+    padding: 15px 0 24px 0;
+  }
+  .content h6 {
+    font-size: 16px;
+    color: #222222;
+    letter-spacing: 0;
+    line-height: 24px;
+    font-weight: bold;
+    padding-right: 15px;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .content p {
+    margin-top: 4px;
+    font-size: 16px;
+    color: #FF6600;
+    letter-spacing: 0;
+    line-height: 16px;
   }
 </style>
