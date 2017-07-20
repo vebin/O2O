@@ -38,10 +38,13 @@
       <list-item></list-item>
       <list-item></list-item>
       <comment-item></comment-item>
+      <comment-item></comment-item>
+      <comment-item></comment-item>
+      <comment-item></comment-item>
     </div>
     <a href="JavaScript:history.back(-1)" @click.prevent="toback"><go-back></go-back></a>
     <div class="footer">
-      <shopfooter :shopinfo="ShopInfo" :photo="photo"></shopfooter>
+      <!-- <shopfooter :shopinfo="ShopInfo" :photo="photo"></shopfooter> -->
     </div>
   </div>
 </template>
@@ -60,7 +63,7 @@ import Description from '../components/shopdetail/description.vue'
 import ListItem from '../components/shopdetail/listItem.vue'
 import CommentItem from '../components/shopdetail/commentItem.vue'
 export default {
-  components: {MyStoreStatus, Tag, GetAddress, Shopfooter, DrivingCell, DataNull, GoBack, Description, ListItem, CommentItem},
+  components: {MyStoreStatus, Tag, GetAddress, Shopfooter, DrivingCell, DataNull, GoBack, Description, ListItem, CommentItem, Shopfooter2},
   data () {
     return {
       headstatus: 1,

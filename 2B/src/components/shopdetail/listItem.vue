@@ -34,7 +34,7 @@ export default {
     position: relative;
     padding-left: 105px;
   }
-  li::before {
+  li::after {
     position: absolute;
     left: 0;
     bottom: 0;
