@@ -35,12 +35,12 @@
         </div>
       </section>
       <description></description>
-      <list-item></list-item>
-      <list-item></list-item>
-      <comment-item></comment-item>
-      <comment-item></comment-item>
-      <comment-item></comment-item>
-      <comment-item></comment-item>
+      <services-item></services-item>
+      <services-item></services-item>
+      <comments-item></comments-item>
+      <comments-item></comments-item>
+      <comments-item></comments-item>
+      <comments-item></comments-item>
     </div>
     <a href="JavaScript:history.back(-1)" @click.prevent="toback"><go-back></go-back></a>
     <div class="footer">
@@ -59,11 +59,11 @@ import DrivingCell from '../components/shopdetail/driving-cell.vue'
 import DataNull from '../components/global/data-null.vue'
 import GoBack from '../components/global/go-back.vue'
 import storage from '../store/storage.js'
-import Description from '../components/shopdetail/description.vue'
-import ListItem from '../components/shopdetail/listItem.vue'
-import CommentItem from '../components/shopdetail/commentItem.vue'
+import Description from '../components/shopdetail/shop-descript.vue'
+import ServicesItem from '../components/shopdetail/important-service.vue'
+import CommentsItem from '../components/shopdetail/comment.vue'
 export default {
-  components: {MyStoreStatus, Tag, GetAddress, Shopfooter, DrivingCell, DataNull, GoBack, Description, ListItem, CommentItem, Shopfooter2},
+  components: {MyStoreStatus, Tag, GetAddress, Shopfooter, DrivingCell, DataNull, GoBack, Description, ServicesItem, CommentsItem},
   data () {
     return {
       headstatus: 1,

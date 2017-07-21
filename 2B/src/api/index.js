@@ -170,5 +170,14 @@ class XHR {
       type: 'GET'
     })
   }
+
+// 提交评论
+  submitComment (json) {
+    return fetch({
+      url: `${URLS}/shopin/commentin.aspx`,
+      body: json,
+      type: 'POST'
+    })
+  }
 }
 export default new XHR()

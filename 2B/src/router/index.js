@@ -12,6 +12,7 @@ import LicenseDetail from '../page/license-detail.vue'
 import ShopTypeDetail from '../page/shop-type-detail.vue'
 import SearchShop from '../page/search-shop.vue'
 import LocationLook from '../page/location-look.vue'
+import Comment from '../page/comment.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -75,7 +76,11 @@ export default new Router({
       path: '/LocationLook/:lng/:lat',
       name: 'LocationLook',
       component: LocationLook
+    },
+    {
+      path: '/Comment/:shopid',
+      name: 'Comment',
+      component: Comment
     }
   ]
 })
-
