@@ -134,10 +134,7 @@ export default {
 .nearby-shops-model{
     background: #fff
   }
-.nearby-shops-model .caption{
-    padding:15px 0;  
-    text-align: center; 
-  }
+
   .shops-list{
     padding-left:15px;
   }

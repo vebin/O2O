@@ -112,9 +112,11 @@ export default {
         this.renderShops(cache)
       } else {                       // 判断是不是客户端 进行不同的定位
         if (this.setApp()==='other') {
-          this.getlocation()
-        } else {
+          // this.getlocation() 线上
           this.webGetLocation()
+        } else {
+          // this.webGetLocation()  线上
+          this.getlocation()
         }
       }
     }
@@ -313,6 +315,12 @@ export default {
     -webkit-overflow-scrolling:touch;
     padding-bottom: 50px;
     box-sizing: border-box; 
+  }
+  .nearby-shops-model .caption{
+    padding:15px;  
+    text-align: left;
+    line-height: 22px;
+    font-size: 18px; 
   }
   .entries{
     padding:5px 0 0;

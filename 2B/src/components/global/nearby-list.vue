@@ -11,8 +11,8 @@
       <div class="info-between">
         <span class="info-label" v-if="shopData.typeshow!=='服务站' && shopData.typeshow!=='驾校'">{{shopData.typeshow}}</span>
         <div v-if="shopData.typeshow==='服务站'&& shopData.brands" class="brands-wrap">
-          <span v-for="(item,index) in shopData.brands" class="brands" v-if="index < 2">{{item.brandname}}</span>
-          <span style="color:#2196F3;padding-bottom:9px;margin-left:5px;" v-if="shopData.brands.length >2">...</span>
+          <span v-for="(item,index) in shopData.brands" class="brands" v-if="index < 1">{{item.brandname}}</span>
+          <span style="color:#2196F3;padding-bottom:9px;margin-left:5px;" v-if="shopData.brands.length >1">...</span>
         </div>
         <span v-if="shopData.typeshow=='驾校'" class="prices">{{regis}}</span>
       </div>
@@ -103,8 +103,8 @@ export default {
     align-items: center;
   }
   .shop-img{
-    width: 100px;
-    height: 70px;
+    width: 90px;
+    height: 60px;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -135,18 +135,17 @@ export default {
   .list-info{
     margin-left: 10px;
     flex: 1;
-    min-height: 70px;
+    min-height: 60px;
     overflow:hidden;
     position: relative;
   }
   .prices{
-    color: #FD4C29;
-    font-size: 18px;
+    color: #FF6600;
+    font-size: 14px;
   }
   .title{
     display: flex;
     flex-direction: row;
-    height: 24px;
   }
   .title-status{
     width: 54px;
@@ -171,18 +170,19 @@ export default {
     font-size: 16px;
     color: #333333;
     letter-spacing: 0;
-    line-height: 18px;
-    height: 18px;
+    line-height: 16px;
+    height: 16px;
     font-weight: bold;
   }
   .info-label{
-    font-size: 14px;
-    color: #666666;
-    line-height: 22px;
+    font-size: 12px;
+    color: #FF6600;
   }
   .info-between{
     display: flex;
     align-items: center;
+    height: 30px;
+    line-height: 30px;
   }
   .brands-wrap{
     font-size:0;
@@ -193,18 +193,26 @@ export default {
     display: inline-block;
     font-size: 12px;
     color: #2196F3;
-    letter-spacing: 0;
-    line-height: 18px;
-    border: 1px solid #2196F3;
-    padding: 0 4px;
-    align-self: center;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    line-height: 16px;
+    height: 16px;
+    padding: 0 2px;
     margin-top: 3px;
     margin-right:5px;
-    max-width:75px;
-    border-radius: 2px;
+    position: relative;
+  }
+  .brands:after{
+    content: " ";
+    position: absolute;
+    left: 0;
+    top:0;
+    width: 200%;
+    height: 200%;
+    border: 1px solid #2196F3;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    border-radius: 4px; 
   }
   .position{
     flex: 1;
