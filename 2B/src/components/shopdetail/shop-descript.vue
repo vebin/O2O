@@ -10,38 +10,37 @@
 </template>
 <script>
 export default {
-  // props: ['typetext', 'index'],
+  props: ['descript'],
   data () {
     return {
       article: '',
-      articleCache: `我公司是河北省衡水市交通局指定的卡车专业维修的企业，公司拥有轿车各种维修设备及各种重卡专用维修设施。技术精湛、价格合理。 我公司是河北省衡水市交通局指定的三类汽车维修企业，公司拥有轿车各种维修设备及各种重卡专用维修设施。技术精湛、价格合理。 我公司是河北省衡水市交通局指定的三类汽车维修企业，公司拥有轿车各种维修设备及各种重卡专用维修设施。技术精湛、价格合理。 我公司是河北省衡水市交通局指定的三类汽车维修企业，公司拥有轿车各种维修设备及各种重卡专用维修设施。技术精湛、价格合理。 我公司是河北省衡水市交通局指定的三类汽车维修企业，公司拥有轿车各种维修设备及各种重卡专用维修设施。技术精湛、价格合理。`,
       seeMore: false,
-      takeBack: false,
+      takeBack: false
     }
   },
   created () {
-    if (this.articleCache.length > 60) {
-      this.subStrarticleCache()
+    if (this.descript.length > 60) {
+      this.subStrdescript()
       this.seeMore = true
     }else {
-      this.article = this.articleCache
+      this.article = this.descript
     }
   },
   methods: {
     more () {
-      this.article = this.articleCache
+      this.article = this.descript
       this.toggle()
     },
     back () {
-      this.subStrarticleCache()
+      this.subStrdescript()
       this.toggle()
     },
     toggle () {
       this.seeMore = !this.seeMore
       this.takeBack = !this.takeBack
     },
-    subStrarticleCache () {
-      this.article = `${this.articleCache.substr(0, 60)}...`
+    subStrdescript () {
+      this.article = `${this.descript.substr(0, 60)}...`
     }
   }
 }

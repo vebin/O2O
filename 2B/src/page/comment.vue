@@ -9,7 +9,7 @@
     <span>剩余{{textareaMaxLength-textarea.length}}字</span>
   </div>
   <div :class="textarea.length >= textareaMinLength || checkedTags.size ? 'submit-active submit' : 'submit'" @click="submit">提交</div>
-  <toast :content="toast" v-if="page.toast"></toast>
+  <toast :msg="toast" v-if="page.toast"></toast>
 </div>
 </template>
 

@@ -1,29 +1,19 @@
 <template>
   <li class="main">
     <figure>
-      <img :src="imgSrc" alt="">
+      <img :src="service.businessImg" alt="">
     </figure>
     <div class="content">
-      <h6>{{type}}</h6>
-      <p>{{price}}</p>
+      <h6>{{service.businessTitle}}</h6>
+      <p>￥{{service.businessPrice}}</p>
     </div>
   </li>
 </template>
 <script>
 export default {
-  // props: ['typetext', 'index'],
+  props: ['service'],
   data () {
-    return {
-      type: '换车胎换车胎换车胎换车胎换车胎换车胎车胎换车胎换车胎换车胎换车胎换车胎换车胎车胎',
-      price: '¥ 120',
-      imgSrc: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=882642063,4115591772&fm=26&gp=0.jpg'
-    }
-  },
-  created () {
-
-  },
-  methods: {
-
+    return {}
   }
 }
 </script>
