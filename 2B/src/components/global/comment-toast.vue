@@ -1,18 +1,17 @@
 <template lang="html">
-  <div>{{content}}</div>
+  <div>{{msg}}</div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 export default {
-  props: ['content'],
+  props: ['msg'],
   data () {
     return {
 
     }
   },
   created () {
-    console.log('created')
     this.$store.state.page.toastLock = false
     setTimeout( () => {
       this.$store.state.page.toastLock = true

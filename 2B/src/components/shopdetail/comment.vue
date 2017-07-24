@@ -2,64 +2,21 @@
   <li class="main">
     <div class="userInfoArea">
       <figure>
-        <img :src="commentData.avatar" alt="">
+        <img :src="comment.avatar" alt="">
       </figure>
-      <span>{{commentData.nickName}}</span>
+      <span>{{comment.nickName}}</span>
     </div>
     <ul class="tags">
-      <li v-for="(item,index) in commentData.lables" :class="index < 3 ? 'active':'' ">{{item.lableName}}</li>
+      <li v-for="(item,index) in comment.lables" :class="index < 3 ? 'active':'' ">{{item.lableName}}</li>
     </ul>
-    <p class="commentInfo">{{commentData.commentInfo}}</p>
+    <p class="commentInfo">{{comment.commentInfo}}</p>
   </li>
 </template>
 <script>
 export default {
-  // props: ['typetext', 'index'],
+  props: ['comment'],
   data () {
-    return {
-      commentData: {
-        commentId: "9",      // 评论Id
-        shopId: "734",       // 店铺Id
-        bbsId: "392484",     // 用户bbsid
-        userName: "米格来宁、", // 用户名
-        nickName: '卡车之宝', // 用户昵称
-        avatar: "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=882642063,4115591772&fm=26&gp=0.jpg",  //用户头像
-        commentInfo: "测试啊测试测试啊测试啊测策划ihcihc赛后i", // 评价内容
-        date: "2017/7/14 16:34:17",  // 评价日期
-        lables: [
-          {
-            "lableId": "1",
-            "lableName": "老板态度很好"
-          },
-          {
-            "lableId": "2",
-            "lableName": "齐全"
-          },
-          {
-            "lableId": "3",
-            "lableName": "齐全"
-          },
-          {
-            "lableId": "4",
-            "lableName": "老板态度很好"
-          },
-          {
-            "lableId": "5",
-            "lableName": "齐全"
-          },
-          {
-            "lableId": "6",
-            "lableName": "齐全"
-          }
-        ]
-      }
-    }
-  },
-  created () {
-
-  },
-  methods: {
-
+    return {}
   }
 }
 </script>
@@ -92,6 +49,7 @@ export default {
     width: 100%;
     height: 100%;
     border-radius: 50%;
+    object-fit: cover;
   }
   .userInfoArea {
     position: relative;
