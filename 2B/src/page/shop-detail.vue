@@ -34,6 +34,20 @@
           <data-null :title='title' :text="text"></data-null>
         </div>
       </section>
+      <div>
+        <description :descript="ShopInfo.description"></description>
+      </div>
+      <div class="services">
+        <ul>
+          <services-item v-for="item in ShopInfo.business" :service="item"></services-item>
+        </ul>
+      </div>
+      <div class="comments" v-if="comment.length">
+        <header>卡友评价（{{comment.length}}）</header>
+        <ul>
+          <comments-item v-for="item in comment" :comment="item"></comments-item>
+        </ul>
+      </div>
     </div>
     <a href="JavaScript:history.back(-1)" @click.prevent="toback"><go-back></go-back></a>
     <div class="footer">
@@ -52,8 +66,11 @@ import DrivingCell from '../components/shopdetail/driving-cell.vue'
 import DataNull from '../components/global/data-null.vue'
 import GoBack from '../components/global/go-back.vue'
 import storage from '../store/storage.js'
+import Description from '../components/shopdetail/shop-descript.vue'
+import ServicesItem from '../components/shopdetail/important-service.vue'
+import CommentsItem from '../components/shopdetail/comment.vue'
 export default {
-  components: {MyStoreStatus, Tag, GetAddress, Shopfooter, DrivingCell, DataNull, GoBack},
+  components: {MyStoreStatus, Tag, GetAddress, Shopfooter, DrivingCell, DataNull, GoBack, Description, ServicesItem, CommentsItem},
   data () {
     return {
       headstatus: 1,
@@ -63,7 +80,9 @@ export default {
       title: '很遗憾',
       text: '该驾校还没有上传驾照信息',
       photo: '',
-      scales: 14
+      scales: 14,
+      pages: 1,
+      comment: []
     }
   },
   created () {
@@ -89,9 +108,15 @@ export default {
     }
   },
   methods: {
+    comments () {
+       XHR.getComment({'shopId':this.$route.params.shopid, 'page': this.pages}).then((res) => {
+          this.comment = res.data.data
+       })
+    },
     settitle () {     // 设置标题
       if (this.setApp()==='other') {
         window.document.title = '店铺详情'
+        this.comments()
       } else {
         this.callNativeMethod("onChangeWebTitle",{changeWebTitle:'店铺详情'})
       }
@@ -103,7 +128,7 @@ export default {
         window.location.href='JavaScript:history.back(-1)'
       }
     },
-    getJingXiaoSang () {                 // 经销商店铺数据   
+    getJingXiaoSang () {                 // 经销商店铺数据
       XHR.getdealerDetail({'id': this.$route.params.shopid}).then((res) => {
         this.ShopInfo = res.data
         this.photo = res.data.photo
@@ -126,7 +151,7 @@ export default {
         }
       })
     },
-    getDetailInfo () {                    // 通过审核店铺数据             
+    getDetailInfo () {                    // 通过审核店铺数据
       XHR.getShoperInfo({'shopid': this.$route.params.shopid}).then((res) => {
         this.ShopInfo = res.data
         let c = res.data.linkcall
@@ -149,7 +174,7 @@ export default {
         }
       })
     },
-    getDetailInfoWait () {             // 未通过审核店铺数据             
+    getDetailInfoWait () {             // 未通过审核店铺数据
       XHR.noAdoptInfo({'waiterid': this.$route.params.shopid}).then((res) => {
         this.ShopInfo = res.data
         // 取电话11位
@@ -220,6 +245,7 @@ export default {
   }
   .shop-img img{
   width:100%;height:100%;-webkit-object-fit: cover;object-fit: cover;display: block;
+  object-fit: cover;
   }
   .driving-list{
     border-top: 10px solid #F5F5F5;
@@ -292,5 +318,36 @@ export default {
 .addresss:after{
   content: '';
   height: 0;
+}
+.services ul{
+    background: #fff;
+    margin-bottom: 10px;
+}
+.comments ul li{
+  padding: 0 15px 15px;
+  position: relative;
+}
+.comments ul li:after{
+  content: " ";
+  position: absolute;
+  left: 15px;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  border-bottom: 1px solid #e5e5e5;
+  -webkit-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+.comments ul li:last-child:after{
+  border: none;
+}
+.comments >header{
+  font-size: 18px;
+  color: #222222;
+  line-height: 27px;
+  padding: 10px 0 0 15px;
+  background: #fff;
 }
 </style>

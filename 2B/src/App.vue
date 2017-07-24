@@ -140,7 +140,20 @@ export default {
   }
   .shops-list li{
     padding:0 15px 15px 0;
+    position: relative
+  }
+  .shops-list li:after{
+    position: absolute;
+    content: '';
+    bottom: 0;
+    left: 0;
+    height: 1px;
     border-bottom: 1px solid #e5e5e5;
+    width: 100%;
+    -webkit-transform-origin: 0 100%;
+    transform-origin: 0 100%;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
   }
   .shops-list li:nth-of-type(n+2){
     padding-top:15px;

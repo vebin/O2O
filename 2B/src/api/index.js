@@ -170,5 +170,21 @@ class XHR {
       type: 'GET'
     })
   }
+// 评论列表
+ getComment (json) {
+    return fetch({
+      url: `${URLS}/shopout/commentlist.aspx`,
+      body: json,
+      type: 'GET'
+    })
+  }
+// 提交评论
+  submitComment (json) {
+    return fetch({
+      url: `${URLS}/shopin/commentin.aspx`,
+      body: json,
+      type: 'POST'
+    })
+  }
 }
 export default new XHR()
