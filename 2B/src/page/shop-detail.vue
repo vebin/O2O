@@ -37,22 +37,22 @@
       <div v-if="ShopInfo.description">
         <description :descript="ShopInfo.description" ></description>
       </div>
-      <div class="services">
+      <div class="services" v-if="ShopInfo.business!==[]">
         <ul>
-          <li v-for="item in business" >
+          <li v-for="(item, index) in ShopInfo.business" >
             <services-item :service="item"></services-item>
           </li>
         </ul>
         <div class="consult">价格仅作参考</div>
       </div>
-      <div class="comments" v-if="ShopInfo.business.length">
-        <header>卡友评价（{{ShopInfo.business.length}}）</header>
+      <div class="comments" v-if="discuss.length">
+        <header>卡友评价（{{discuss.length}}）</header>
         <ul>
-          <li v-for="item in ShopInfo.business" >
+          <li v-for="item in discuss" >
             <comments-item :comment="item"></comments-item>
           </li>
         </ul>
-        <div>
+        <div v-if="discuss.length">
             <loading :end="list_end" :loading="loading"></loading>
         </div>
       </div>
@@ -98,27 +98,7 @@ export default {
       list_end: false,
       loading: false,
       toast:'',
-      business: 
-      [
-          {
-              businessId: "3",         //业务ID
-              businessTitle: "测试三asdsadas测试三asdsadas测试三asdsadas测试三asdsadas测试三asdsadas测试三asdsadas",//业务名称
-              businessImg: "https://img1.kcimg.cn/peripheral/2017/0125/0125192832.jpg!120",//业务图片
-              businessPrice: "125.98"//业务价格
-          },
-          {
-              businessId: "2",
-              businessTitle: "测试二",
-              businessImg: "https://img1.kcimg.cn/peripheral/2017/0123/0123221840.jpg!120",
-              businessPrice: "123.65"
-          },
-          {
-              businessId: "1",
-              businessTitle: "测试一",
-              businessImg: "https://img1.kcimg.cn/peripheral/2017/0122/0122000153.jpg!120",
-              businessPrice: "123"
-          }
-      ]
+      business:false
     }
   },
   created () {
@@ -300,8 +280,12 @@ export default {
     display: flex;
   }
   .shop-img img{
-  width:100%;height:100%;-webkit-object-fit: cover;object-fit: cover;display: block;
-  object-fit: cover;
+    width:100%;
+    height:100%;
+    -webkit-object-fit: cover;
+    object-fit: cover;
+    display: block;
+    object-fit: cover;
   }
   .driving-list{
     border-top: 10px solid #F5F5F5;

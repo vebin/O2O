@@ -193,7 +193,6 @@ export default {
     },
     loadMore (e) {
       this.gotopStatus = e.target.scrollTop >= e.target.offsetHeight*2 ? true : false;
-      console.log(this.loamore)
       if (e.target.scrollTop + window.innerHeight >= e.target.scrollHeight && !this.loamore) {
         this.loamore = true
         if (this.$route.params.typeid==='9' ) {

@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <li class="main">
     <div class="userInfoArea">
       <figure>
         <img :src="comment.avatar">
@@ -9,24 +9,38 @@
     <ul class="tags">
       <li v-for="(item,index) in comment.lables" :class="index < 3 ? 'active':'' ">{{item.lableName}}</li>
     </ul>
-    <p class="commentInfo"  v-if="comment.commentInfo">{{comment.commentInfo}}</p>
-  </div>
+    <p class="commentInfo" v-if="comment.commentInfo.length">{{comment.commentInfo}}</p>
+  </li>
 </template>
 <script>
 export default {
   props: ['comment'],
   data () {
     return {}
-  },
-  created(){
   }
 }
 </script>
 <style scoped>
   .main {
+    list-style-type:none;
+    background: #fff;
+    padding-bottom: 15px;
     position: relative;
   }
+  .main::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    content: "";
+    width: 100%;
+    height: 1px;
+    background: #E5E5E5;
+    transform: scaleY(0.5);
+  }
   .main figure {
+    position: absolute;
+    top: 15px;
+    left: 0;
     width: 32px;
     height: 32px;
   }
@@ -39,17 +53,16 @@ export default {
   }
   .userInfoArea {
     position: relative;
-    display: flex;
-    align-items: center;
-    padding-top: 12px;
+    padding-left: 42px;
   }
   .userInfoArea span {
     font-size: 16px;
     color: #2062A9;
     letter-spacing: 0;
     line-height: 16px;
-    flex: 1;
-    margin-left: 10px;
+    padding-top: 23px;
+    padding-bottom: 20px;
+    display: block;
   }
   .tags {
     font-size: 0;
@@ -63,7 +76,7 @@ export default {
     line-height: 26px;
     color: #666;
     margin-right: 10px;
-    margin-top: 12px;
+    margin-bottom: 15px;
     background-color: #eee;
     font-size: 14px;
   }
@@ -75,6 +88,5 @@ export default {
     color: #333333;
     letter-spacing: 0;
     line-height: 24px;
-    margin-top: 12px;
   }
 </style>
