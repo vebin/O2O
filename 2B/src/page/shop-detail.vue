@@ -34,10 +34,17 @@
           <data-null :title='title' :text="text"></data-null>
         </div>
       </section>
+      <description></description>
+      <services-item></services-item>
+      <services-item></services-item>
+      <comments-item></comments-item>
+      <comments-item></comments-item>
+      <comments-item></comments-item>
+      <comments-item></comments-item>
     </div>
     <a href="JavaScript:history.back(-1)" @click.prevent="toback"><go-back></go-back></a>
     <div class="footer">
-      <shopfooter :shopinfo="ShopInfo" :photo="photo"></shopfooter>
+      <!-- <shopfooter :shopinfo="ShopInfo" :photo="photo"></shopfooter> -->
     </div>
   </div>
 </template>
@@ -52,8 +59,11 @@ import DrivingCell from '../components/shopdetail/driving-cell.vue'
 import DataNull from '../components/global/data-null.vue'
 import GoBack from '../components/global/go-back.vue'
 import storage from '../store/storage.js'
+import Description from '../components/shopdetail/shop-descript.vue'
+import ServicesItem from '../components/shopdetail/important-service.vue'
+import CommentsItem from '../components/shopdetail/comment.vue'
 export default {
-  components: {MyStoreStatus, Tag, GetAddress, Shopfooter, DrivingCell, DataNull, GoBack},
+  components: {MyStoreStatus, Tag, GetAddress, Shopfooter, DrivingCell, DataNull, GoBack, Description, ServicesItem, CommentsItem},
   data () {
     return {
       headstatus: 1,
@@ -103,7 +113,7 @@ export default {
         window.location.href='JavaScript:history.back(-1)'
       }
     },
-    getJingXiaoSang () {                 // 经销商店铺数据   
+    getJingXiaoSang () {                 // 经销商店铺数据
       XHR.getdealerDetail({'id': this.$route.params.shopid}).then((res) => {
         this.ShopInfo = res.data
         this.photo = res.data.photo
@@ -126,7 +136,7 @@ export default {
         }
       })
     },
-    getDetailInfo () {                    // 通过审核店铺数据             
+    getDetailInfo () {                    // 通过审核店铺数据
       XHR.getShoperInfo({'shopid': this.$route.params.shopid}).then((res) => {
         this.ShopInfo = res.data
         let c = res.data.linkcall
@@ -149,7 +159,7 @@ export default {
         }
       })
     },
-    getDetailInfoWait () {             // 未通过审核店铺数据             
+    getDetailInfoWait () {             // 未通过审核店铺数据
       XHR.noAdoptInfo({'waiterid': this.$route.params.shopid}).then((res) => {
         this.ShopInfo = res.data
         // 取电话11位

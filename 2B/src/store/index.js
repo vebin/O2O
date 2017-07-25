@@ -29,7 +29,9 @@ const store = new Vuex.Store({
       driverImgServerid: '',
       phonerError: false,
       Errormsg: '',
-      imgloading: false
+      imgloading: false,
+      toast: false,
+      toastLock: true
     },
     ShopData: {  // 我的商铺数据
       name: '',
@@ -109,6 +111,11 @@ const store = new Vuex.Store({
     },
     setNowAddress (state, json) {
       state.nowAddress = json
+    },
+    toggleToast (state) {
+      if (state.page.toastLock) {
+        state.page.toast = !state.page.toast
+      }
     }
   },
   actions: {
@@ -138,6 +145,9 @@ const store = new Vuex.Store({
     },
     setNowAddress (context, json) {
       context.commit('setNowAddress', json)
+    },
+    toggleToast (context) {
+      context.commit('toggleToast')
     }
   }
 })

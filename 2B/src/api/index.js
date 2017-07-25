@@ -1,6 +1,6 @@
 import fetch from './ajax'
 
-export const DEBUG = false                  // 是否开发模式
+export const DEBUG = true                  // 是否开发模式
 const HTTP_DEV = 'https://didi.360che.com/nearby-api'      // 测试地址
 const HTTPS = 'https://nearby-api.360che.com'              // 正式地址
 const URLS = DEBUG ? HTTP_DEV : HTTPS
@@ -168,6 +168,22 @@ class XHR {
       url: `http://bbs-api.360che.com/interface/app/index.php?type=user&action=UserInfo&method=simpleInfo`,
       body: json,
       type: 'GET'
+    })
+  }
+  // 获取评价标签
+  getCommentTags (json) {
+    return fetch({
+      url: `${URLS}/cm/commentlables.aspx`,
+      body: json,
+      type: 'GET'
+    })
+  }
+  // 提交评论
+  submitComment (json) {
+    return fetch({
+      url: `${URLS}/shopin/commentin.aspx`,
+      body: json,
+      type: 'POST'
     })
   }
 }
