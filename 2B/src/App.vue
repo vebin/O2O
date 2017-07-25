@@ -135,8 +135,8 @@ export default {
     background: #fff
   }
 .nearby-shops-model .caption{
-    padding:15px 0;  
-    text-align: center; 
+    padding:15px 0;
+    text-align: center;
   }
   .shops-list{
     padding-left:15px;
@@ -147,5 +147,18 @@ export default {
   }
   .shops-list li:nth-of-type(n+2){
     padding-top:15px;
+  }
+  .swiper-pagination .swiper-pagination-bullet{
+    position: relative;
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 5px;
+    background: rgba(255,255,255,0.40);
+    vertical-align: top;
+  }
+  .swiper-pagination .swiper-pagination-bullet-active{
+    background: #fff;
   }
 </style>
