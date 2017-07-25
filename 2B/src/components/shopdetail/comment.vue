@@ -2,14 +2,14 @@
   <li class="main">
     <div class="userInfoArea">
       <figure>
-        <img :src="comment.avatar" alt="">
+        <img :src="comment.avatar">
       </figure>
       <span>{{comment.nickName}}</span>
     </div>
     <ul class="tags">
       <li v-for="(item,index) in comment.lables" :class="index < 3 ? 'active':'' ">{{item.lableName}}</li>
     </ul>
-    <p class="commentInfo">{{comment.commentInfo}}</p>
+    <p class="commentInfo" v-if="comment.commentInfo.length">{{comment.commentInfo}}</p>
   </li>
 </template>
 <script>

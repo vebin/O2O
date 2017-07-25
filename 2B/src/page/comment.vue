@@ -1,8 +1,8 @@
 <template>
-<div class="wraper">
+<div class="wraper" @touchmove.stop.prevent>
   <h3>快速评价</h3>
   <ul class="tags">
-    <li :class="item.checked?'tag tag-active':'tag'" v-for="(item, index) in tags" @click="clickTag(item, index)">{{item.cont}}</li>
+    <li :class="item.checked?'tag tag-active':'tag'" v-for="(item, index) in tags" @click="clickTag(item, index)">{{item.Title}}</li>
   </ul>
   <div class="commen-area">
     <textarea v-model="textarea" :maxlength="textareaMaxLength" placeholder="(选填)您对小店的服务感觉怎么样，还满意吗？"></textarea>
@@ -22,60 +22,52 @@ export default {
   data () {
     return {
       toast: '',
-      tags: [
-        {
-          checked: false,
-          cont: '老板态度好'
-        },
-        {
-          checked: false,
-          cont: '设备齐全'
-        },
-        {
-          checked: false,
-          cont: '物美价廉'
-        },
-        {
-          checked: false,
-          cont: '价格太贵'
-        },
-        {
-          checked: false,
-          cont: '数据不准'
-        },
-        {
-          checked: false,
-          cont: '电话没人接'
-        }
-      ],
+      tags: [],
       checkedTags: new Set(),
       textarea: '',
       textareaState: false,
       textareaMaxLength: 50,
       textareaMinLength: 5,
       shopId: null,
-      lock: true,
-      submitState: false
+      lock: true
     }
   },
   created () {
     this.shopId = this.$route.params.shopid
+    this.setTags()
   },
   methods: {
     ...mapActions(['toggleToast']),
+    setTags () {
+      XHR.getCommentTags().then(res => {
+        console.log(res);
+        let data = [...res.data.data]
+        if (res.data.status === 1) {
+          data.forEach(item => {
+            item.checked = false
+          })
+          this.tags = data
+        }
+      }, err => {
+        console.log(err)
+      })
+    },
     clickTag (val, index) {
       this.tags[index].checked = !this.tags[index].checked
-      if (this.checkedTags.has(val.cont)) {
-        this.checkedTags.delete(val.cont)
+      if (this.checkedTags.has(val.Id)) {
+        this.checkedTags.delete(val.Id)
       } else {
-        this.checkedTags.add(val.cont)
+        this.checkedTags.add(val.Id)
       }
     },
     submit () {
       if (!this.lock) {
         return
       }
-      if (!this.checkData()) {
+      // if ((this.textarea.length >= this.textareaMinLength || this.checkedTags.size) && !this.checkData()) {
+      //   return
+      // }
+      if (!(this.textarea.length >= this.textareaMinLength || this.checkedTags.size)) {
         return
       }
       XHR.submitComment({
@@ -92,7 +84,7 @@ export default {
             this.$router.go(-1)
           },3000)
         } else { // 评价失败
-          this.showToast('评价失败')
+          this.showToast(data.msg)
         }
         this.lock = true
       }, err => {
@@ -100,18 +92,13 @@ export default {
         this.lock = true
       })
     },
-    checkData () {
-      if (this.checkedTags.size === 0) {
-        if (this.textarea.length === 0) {
-          this.showToast('请填写内容')
-          return false
-        } else if (this.textarea.length < this.textareaMinLength) {
-          this.showToast(`您最少需要输${this.textareaMinLength}个字`)
-          return false
-        }
-      }
-      return true
-    },
+    // checkData () {
+    //   if (this.textarea.length < this.textareaMinLength) {
+    //     this.showToast(`您最少需要输${this.textareaMinLength}个字`)
+    //     return false
+    //   }
+    //   return true
+    // },
     showToast (cont) {
       this.toast = cont
       this.toggleToast()
@@ -144,7 +131,7 @@ export default {
   .tags .tag {
     margin-right: 15px;
     margin-top: 15px;
-    font-size: 14px;
+    font-size: 14px !important;
     color: rgb(102, 102, 102);
     line-height: 30px;
     padding: 0 12px;

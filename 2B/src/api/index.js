@@ -170,8 +170,15 @@ class XHR {
       type: 'GET'
     })
   }
-
-// 提交评论
+  // 获取评价标签
+  getCommentTags (json) {
+    return fetch({
+      url: `${URLS}/cm/commentlables.aspx`,
+      body: json,
+      type: 'GET'
+    })
+  }
+  // 提交评论
   submitComment (json) {
     return fetch({
       url: `${URLS}/shopin/commentin.aspx`,
