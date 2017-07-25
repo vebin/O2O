@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <div class="content">
+    <div class="content" @scroll="loadMore">
       <figure class="shop-img">
         <img :src="photo" :alt="ShopInfo.name" ref="img">
       </figure>
@@ -34,19 +34,26 @@
           <data-null :title='title' :text="text"></data-null>
         </div>
       </section>
-      <div>
-        <description :descript="ShopInfo.description"></description>
+      <div v-if="description">
+        <description :descript="description" ></description>
       </div>
       <div class="services">
         <ul>
-          <services-item v-for="item in ShopInfo.business" :service="item"></services-item>
+          <li v-for="item in business" >
+            <services-item :service="item"></services-item>
+          </li>
         </ul>
       </div>
-      <div class="comments" v-if="comment.length">
-        <header>卡友评价（{{comment.length}}）</header>
+      <div class="comments" v-if="discuss.length">
+        <header>卡友评价（{{discuss.length}}）</header>
         <ul>
-          <comments-item v-for="item in comment" :comment="item"></comments-item>
+          <li v-for="item in discuss" >
+            <comments-item :comment="item"></comments-item>
+          </li>
         </ul>
+        <div v-if="discuss.length">
+            <loading :end="list_end" :loading="loading"></loading>
+        </div>
       </div>
     </div>
     <a href="JavaScript:history.back(-1)" @click.prevent="toback"><go-back></go-back></a>
@@ -69,8 +76,9 @@ import storage from '../store/storage.js'
 import Description from '../components/shopdetail/shop-descript.vue'
 import ServicesItem from '../components/shopdetail/important-service.vue'
 import CommentsItem from '../components/shopdetail/comment.vue'
+import Loading from '../components/global/loading.vue'
 export default {
-  components: {MyStoreStatus, Tag, GetAddress, Shopfooter, DrivingCell, DataNull, GoBack, Description, ServicesItem, CommentsItem},
+  components: {MyStoreStatus, Tag, GetAddress, Shopfooter, DrivingCell, DataNull, GoBack, Description, ServicesItem, CommentsItem, Loading},
   data () {
     return {
       headstatus: 1,
@@ -82,7 +90,32 @@ export default {
       photo: '',
       scales: 14,
       pages: 1,
-      comment: []
+      loamore: false,
+      discuss: [],
+      list_end: false,
+      loading: false,
+      description:"dasdsadsadsdsds",
+      business: 
+      [
+          {
+              businessId: "3",         //业务ID
+              businessTitle: "测试三asdsadas测试三asdsadas测试三asdsadas测试三asdsadas测试三asdsadas测试三asdsadas",//业务名称
+              businessImg: "https://img1.kcimg.cn/peripheral/2017/0125/0125192832.jpg!120",//业务图片
+              businessPrice: "125.98"//业务价格
+          },
+          {
+              businessId: "2",
+              businessTitle: "测试二",
+              businessImg: "https://img1.kcimg.cn/peripheral/2017/0123/0123221840.jpg!120",
+              businessPrice: "123.65"
+          },
+          {
+              businessId: "1",
+              businessTitle: "测试一",
+              businessImg: "https://img1.kcimg.cn/peripheral/2017/0122/0122000153.jpg!120",
+              businessPrice: "123"
+          }
+      ]
     }
   },
   created () {
@@ -110,8 +143,28 @@ export default {
   methods: {
     comments () {
        XHR.getComment({'shopId':this.$route.params.shopid, 'page': this.pages}).then((res) => {
-          this.comment = res.data.data
+          this.discuss = res.data.data
+          if (this.discuss.length<10) {
+            this.list_end = true
+            this.loamore = true
+          }
        })
+    },
+    loadMore(e){
+      if (e.target.scrollTop + window.innerHeight >= e.target.scrollHeight && !this.loamore){
+        this.loamore = true
+        XHR.getComment({'shopId':this.$route.params.shopid, 'page': this.pages ===1?2:this.pages }).then((res) => {
+          let datas = res.data.data
+          this.discuss = this.discuss.concat(datas)
+          if (datas.length<10) {
+            this.list_end = true
+            this.loamore = true
+          }else{
+            this.pagenum += 1
+            this.loamore = false
+          }
+        })
+      }
     },
     settitle () {     // 设置标题
       if (this.setApp()==='other') {
@@ -322,10 +375,17 @@ export default {
 .services ul{
     background: #fff;
     margin-bottom: 10px;
+    margin-top: 10px;
+}
+.services ul li{
+  padding: 15px 0 0 15px;
+  min-height: 60px;
+  position: relative
 }
 .comments ul li{
   padding: 0 15px 15px;
   position: relative;
+  background: #fff;
 }
 .comments ul li:after{
   content: " ";

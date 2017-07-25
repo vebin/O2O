@@ -1,7 +1,6 @@
 <template>
    <div class="cells">
-    <label class="cell-title">地址</label>
-    <i class="location"></i>
+    <label class="cell-icon"></label>
     <span class="cell-input">{{address}}</span>
     <span class="cell-arrow"></span>
   </div>
@@ -20,6 +19,14 @@ export default {
 </script>
 
 <style scoped>
+.cell-icon{
+  background: url('https://s.kcimg.cn/wap/images/detail/o2oImg/map.png') 50% 50%;
+  width: 22px;
+  height: 44px;
+  background-size: cover;
+  margin-right: 10px;
+  margin-left: 15px;
+}
 .cell-input{
   position: relative;
   padding: 5px 0;

@@ -170,7 +170,7 @@ export default {
       })
     },
     renderEntries () {  // 渲染入口
-      API.getShopTypes().then((res) => {
+      API.getShopTypes({'v':1}).then((res) => {
         this.entries = res.data
       }).catch(() => {
         console.log('入口数据请求失败')
@@ -330,7 +330,7 @@ export default {
   .entries a{
     margin-bottom:12px;
     float: left;
-    width: 20%;
+    width: 25%;
     box-sizing: border-box;
   }
   .advert-max,.advert-flex{

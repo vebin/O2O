@@ -9,12 +9,16 @@
         <span class="title-status" v-if="shopData.certified === '1'">已认证</span>
       </div>
       <div class="info-between">
-        <span class="info-label" v-if="shopData.typeshow!=='服务站' && shopData.typeshow!=='驾校'">{{shopData.typeshow}}</span>
+        <span class="info-label" v-if="shopData.typeshow!=='服务站' && shopData.typeshow!=='驾校' && shopData.shoptypeid!=='1'">{{shopData.typeshow}}</span>
         <div v-if="shopData.typeshow==='服务站'&& shopData.brands" class="brands-wrap">
           <span v-for="(item,index) in shopData.brands" class="brands" v-if="index < 1">{{item.brandname}}</span>
           <span style="color:#2196F3;padding-bottom:9px;margin-left:5px;" v-if="shopData.brands.length >1">...</span>
         </div>
         <span v-if="shopData.typeshow=='驾校'" class="prices">{{regis}}</span>
+        <div v-if="shopData.shoptypeid==='1'" class="weixiu">
+          <span class="info-label">{{shopType}}</span>
+          <div class="desc">{{typeDscript}}</div>
+        </div>
       </div>
       <div class="position" v-if="shopData.address">
         <span class="info-position">{{shopData.address}}</span>
@@ -38,7 +42,9 @@ export default {
       this.regis = '￥'+this.shopData.registerFee+'元起'
     }
     if (this.shopData.typeshow && this.shopData.typeshow.indexOf('维修')>-1) {
-      this.shopData.typeshow = '维修'
+      this.shopType = '维修'
+      let desc = this.shopData.typeshow.substring(3)
+      this.typeDscript = desc.replace(/,/, " | ")
     }
   },
   data () {
@@ -47,7 +53,9 @@ export default {
       photo: this.shopData.photo,
       shoptypeid: 1,
       watchSource: '',
-      regis:''
+      regis:'',
+      shopType:'',            // 维修类别
+      typeDscript:''      // 维修包含的小分类
     }
   },
   mounted () {  // 默认图片
@@ -59,23 +67,29 @@ export default {
     savePositon(e){
       let nowSource = this.$route.path
       if (nowSource && nowSource.indexOf("ShopTypeDetail") > -1) {
+         if (this.$route.params.typeid === '9') {
+            if (storage.get('dealer')) {
+                storage.remove('dealer')
+              }
+              storage.set('dealer', 'true')
+              location.href = `https://dealerm.360che.com/${this.shopData.id}`
+          } else {
+            location.href = this.$el.href
+          }
         let contains = document.querySelector('.nearby-shops-model')
         if (contains) {
           storage.set('detailPosition',contains.scrollTop)
         }
+        
       } else {
         let contains = document.querySelector('.container')
         if (contains) {
           storage.set('position',contains.scrollTop)
         }
+        location.href = this.$el.href
       }
-      if (this.$route.params.typeid === '9') {
-        if (storage.get('dealer')) {
-          storage.remove('dealer')
-        }
-        storage.set('dealer', 'true')
-      }
-      location.href = this.$el.href
+     
+      
     },
     changeNumber () {  // 转换距离
       var c = Number(this.shopData.distanceKM)
@@ -172,7 +186,6 @@ export default {
     letter-spacing: 0;
     line-height: 16px;
     height: 16px;
-    font-weight: bold;
   }
   .info-label{
     font-size: 12px;
@@ -228,10 +241,10 @@ export default {
   .info-position{
     flex: 1;
     overflow: hidden;white-space: nowrap;text-overflow: ellipsis;
-    font-size: 14px;
-    line-height: 14px;
+    font-size: 12px;
+    line-height: 12px;
     margin-top: 8px;
-    color: #999;
+    color: #bbb;
     display: block;
   }
   .info-position:before{
@@ -245,9 +258,24 @@ export default {
     align-self: flex-end;
     height: 100%;
     text-align: right;
-    font-size: 14px;
-    color: #666;
-    line-height: 14px;
+    font-size: 12px;
+    color: #999;
+    line-height: 12px;
     margin-top: 8px;
+  }
+  .weixiu {
+    display: flex;
+    flex-direction: row
+  }
+  .weixiu .desc{
+    margin-left: 10px;
+    flex: 1;
+    font-size: 12px;
+    color: #666;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 </style>

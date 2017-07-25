@@ -75,7 +75,7 @@ export default {
     flex-direction: row;
     background:#FFFFFF;
     font-size: 18px;
-    color: #09BB07;
+    color: #FF6600;
     letter-spacing: 0;
     text-align: center;
     box-shadow: 0 -2px 5px 0 rgba(0,0,0,0.05);

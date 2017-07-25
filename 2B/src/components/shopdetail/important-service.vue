@@ -1,5 +1,5 @@
 <template>
-  <li class="main">
+  <div class="main">
     <figure>
       <img :src="service.businessImg" alt="">
     </figure>
@@ -7,7 +7,7 @@
       <h6>{{service.businessTitle}}</h6>
       <p>￥{{service.businessPrice}}</p>
     </div>
-  </li>
+  </div>
 </template>
 <script>
 export default {
@@ -18,26 +18,28 @@ export default {
 }
 </script>
 <style scoped>
-  li {
-    list-style-type:none;
+  .main {
     background: #fff;
     position: relative;
-    padding: 15px;
-    padding-left: 120px;
+    padding-left: 105px;
+    display: flex;
+    align-items: center;
+    height: 90px;
   }
-  li::after {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  content: "";
-  width: 100%;
-  height: 1px;
-  background: #E5E5E5;
-  transform: scaleY(0.5);
-  }
-  li figure {
+  .main:after {
     position: absolute;
-    left: 15px;
+    left: 0;
+    bottom: 0;
+    content: "";
+    width: 100%;
+    height: 1px;
+    background: #E5E5E5;
+    transform: scaleY(0.5);
+  }
+  .main figure {
+    position: absolute;
+    left: 0;
+    top: 15px;
     width: 90px;
     height: 60px;
   }

@@ -5,8 +5,16 @@
       <span class="person-name" v-if="shopinfo.linkman">{{shopinfo.linkman}}</span>
       <span :class="(shopinfo.linkcall && !shopinfo.linkman) ? 'only-one' : 'person-phone'" v-if="shopinfo.linkcall">{{shopinfo.linkcall}}</span>
     </div>
+    <a :href="`#/Comment/${shopinfo.id}`" :class="[!shopinfo.linkcall ? 'onliy-commit' : 'to-commit']" @click.prevent="toComment">写评价</a>
     <div :class="['share',!shopinfo.linkcall ? 'onliy-share' : '']" @click="shareThis" v-if="shareShow">分享</div>
   </div>
+  <!-- <div class="footer">
+    <div class="info" @click="tel" v-if="shopinfo.linkcall">
+      <span class="person-name" v-if="shopinfo.linkman">{{shopinfo.linkman}}</span>
+      <span :class="(shopinfo.linkcall && !shopinfo.linkman) ? 'only-one' : 'person-phone'" v-if="shopinfo.linkcall">{{shopinfo.linkcall}}</span>
+    </div>
+    <div :class="['share',!shopinfo.linkcall ? 'onliy-share' : '']" @click="shareThis" v-if="shareShow">分享</div>
+  </div> -->
 </div>
 </template>
 <script>
@@ -20,12 +28,13 @@ export default {
   created () {
     this.getWxconfig()
     if (this.setApp()!=='other') {
+      this.setUserInfo()
       this.shareShow = true
+    }else{
+      if (document.cookie.match(/AbcfN_ajaxuid=([^;$]+)/)) {
+        this.ShopData.bbsid = document.cookie.match(/AbcfN_ajaxuid=([^;$]+)/)[1]
+      }
     }
-    // let _this = this
-    // setTimeout(function(){
-    //   _this.share()
-    // }, 100)
   },
   mounted () {
     this.share()
@@ -43,6 +52,18 @@ export default {
         imgUrl: this.photo, // 分享图标
         isAddCalorie: false //分享成功后是否加卡路里，true加，false不加
       })
+    },
+    toComment () {
+      if (this.ShopData.bbsid === '' || this.ShopData.bbsid === '0') {
+        if (this.setApp()==='other') {
+          window.truckhomeAccountBinding.show()
+        } else {
+          this.callNativeMethod("onLogin",{})
+        }
+      } else{
+        console.log(this.$el.querySelector('a').href)
+        window.location.href = this.$el.querySelector('a').href
+      }
     },
     share () {
       let _this = this
@@ -94,7 +115,8 @@ export default {
     flex: 1;
     height: 50px;
     padding-left: 54px;
-    background: #09BB07;
+    background: #fff;
+    color: #FF6600;
     white-space: nowrap;
     text-overflow:ellipsis;
     overflow: hidden;
@@ -110,21 +132,21 @@ export default {
   .person-name{
     margin-top: 4px;
     font-size: 12px;
-    color: #FFFFFF;
     letter-spacing: 0;
     line-height: 18px;
     display: block;
     height: 18px;
+    color: #333;
   }
   .person-phone{
     font-size: 16px;
-    color: #FFFFFF;
+    color: #333;
     line-height: 24px;
     display: block;
   }
   .only-one{
     font-size: 16px;
-    color: #FFFFFF;
+    color: #333;
     line-height: 50px;
     display: block;
   }
@@ -153,5 +175,17 @@ export default {
   .onliy-share:before{
     left: 0;
     right: 50px;
+  }
+  .to-commit,.onliy-commit{
+    width: 110px;
+    height: 50px;
+    background: #FF6600;
+    font-size: 18px;
+    color: #fff;
+    line-height: 50px;
+    text-align: center;
+  }
+  .onliy-commit{
+    flex: 1;
   }
 </style>

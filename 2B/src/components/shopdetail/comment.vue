@@ -1,5 +1,5 @@
 <template>
-  <li class="main">
+  <div class="main">
     <div class="userInfoArea">
       <figure>
         <img :src="comment.avatar" alt="">
@@ -10,32 +10,22 @@
       <li v-for="(item,index) in comment.lables" :class="index < 3 ? 'active':'' ">{{item.lableName}}</li>
     </ul>
     <p class="commentInfo">{{comment.commentInfo}}</p>
-  </li>
+  </div>
 </template>
 <script>
 export default {
   props: ['comment'],
   data () {
     return {}
+  },
+  created(){
+    console.log(this.comment)
   }
 }
 </script>
 <style scoped>
   .main {
-    list-style-type:none;
-    background: #fff;
-    padding-bottom: 15px;
     position: relative;
-  }
-  .main::after {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    content: "";
-    width: 100%;
-    height: 1px;
-    background: #E5E5E5;
-    transform: scaleY(0.5);
   }
   .main figure {
     position: absolute;

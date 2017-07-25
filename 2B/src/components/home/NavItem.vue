@@ -1,6 +1,6 @@
 <template>
   <figure class="nav-item">
-    <img :src="`//s.kcimg.cn/wap/images/detail/o2oImg/entry_${data.Id}.png`" :alt="data.Typedescription">
+    <img :src="`//s.kcimg.cn/wap/images/detail/o2oImg/menu_${data.Id}.png`" :alt="data.Typedescription">
     <figcaption>{{data.Typedescription}}</figcaption>
   </figure>
 </template>

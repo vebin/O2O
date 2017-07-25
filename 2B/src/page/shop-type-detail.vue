@@ -90,9 +90,11 @@ export default {
           this.getData()
         } else{
           if (this.setApp()!=='other') {
-            this.webGetLocation()
-          } else{
+            // this.webGetLocation()  线上
             this.getlocation()
+          } else{
+            // this.getlocation()   线上
+            this.webGetLocation()
           }
         }
       }

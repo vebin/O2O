@@ -50,7 +50,6 @@ export default {
     background: #fff;
     padding: 10px 15px 0;
     margin-top: 10px;
-    margin-bottom: 10px;
   }
   .main h5 {
     font-size: 18px;
