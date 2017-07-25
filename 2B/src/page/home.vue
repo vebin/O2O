@@ -340,7 +340,8 @@ export default {
   }
   .adv-item{
     box-sizing: border-box;
-    border-right: 1px solid #eee
+    position: relative;
+    border-right:1px solid #e5e5e5;
   }
   .advert-flex{
     display: flex;

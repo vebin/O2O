@@ -55,6 +55,7 @@ export default {
     font-size: 18px;
     color: #222222;
     line-height: 27px;
+    font-weight: bold;
   }
   .main p {
     margin-top: 5px;

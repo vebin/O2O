@@ -168,6 +168,7 @@ export default {
     letter-spacing: 0;
     line-height: 16px;
     text-align: right;
+    margin-top: -2px;
   }
   .title-status:before{
     content:"\e6f9";
@@ -178,14 +179,17 @@ export default {
   }
   .info-title{
     flex: 1;
-    flex-wrap: nowrap;
-    overflow: hidden;
+    display: -webkit-box;
     text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     font-size: 16px;
     color: #333333;
     letter-spacing: 0;
-    line-height: 16px;
-    height: 16px;
+    line-height: 18px;
+    height: 18px;
+    font-weight: bold;
   }
   .info-label{
     font-size: 12px;
@@ -194,8 +198,8 @@ export default {
   .info-between{
     display: flex;
     align-items: center;
-    height: 30px;
-    line-height: 30px;
+    height: 28px;
+    line-height: 28px;
   }
   .brands-wrap{
     font-size:0;
@@ -206,7 +210,7 @@ export default {
     display: inline-block;
     font-size: 12px;
     color: #2196F3;
-    line-height: 16px;
+    line-height: 18px;
     height: 16px;
     padding: 0 2px;
     margin-top: 3px;
@@ -214,7 +218,7 @@ export default {
     position: relative;
   }
   .brands:after{
-    content: " ";
+    content: "";
     position: absolute;
     left: 0;
     top:0;
@@ -250,7 +254,7 @@ export default {
   .info-position:before{
     content: "\e693";
     font-family: 'shoper';
-    font-size: 12px;
+    font-size: 10px;
     color: #ccc;
     margin-right: 5px;
   }

@@ -34,8 +34,8 @@
           <data-null :title='title' :text="text"></data-null>
         </div>
       </section>
-      <div v-if="description">
-        <description :descript="description" ></description>
+      <div v-if="ShopInfo.description">
+        <description :descript="ShopInfo.description" ></description>
       </div>
       <div class="services">
         <ul>
@@ -43,6 +43,7 @@
             <services-item :service="item"></services-item>
           </li>
         </ul>
+        <div class="consult">价格仅作参考</div>
       </div>
       <div class="comments" v-if="discuss.length">
         <header>卡友评价（{{discuss.length}}）</header>
@@ -94,7 +95,6 @@ export default {
       discuss: [],
       list_end: false,
       loading: false,
-      description:"dasdsadsadsdsds",
       business: 
       [
           {
@@ -124,7 +124,7 @@ export default {
     } else if (/(Android)/i.test(window.navigator.userAgent)) {
         this.scales = 16
     }
-    if (storage.get('dealer')) {
+    if (this.$route.params.typeid=== '9') {
       this.getJingXiaoSang()
     }else{
       if (this.$route.params.type === '0') {
@@ -316,8 +316,11 @@ export default {
     padding: 15px 15px 15px 0;
     border-bottom: 1px solid #e5e5e5;
   }
-  .shop-info{ border-bottom: 10px solid #F5F5F5;padding-bottom: 15px;
-    background: #fff}
+  .shop-info{ 
+    border-bottom: 10px solid #F5F5F5;
+    padding-bottom: 15px;
+    background: #fff
+  }
   .footer{
     position: fixed;
     left: 0;
@@ -365,20 +368,34 @@ export default {
   border-radius: 2px;
   display: inline-block;
   float: left;
-  border: 1px solid #2196F3;
   margin:0px 10px 10px 0;
+  position: relative
+}
+.brands:after{
+  content: " ";
+  position: absolute;
+  left: 0;
+  top:-1px;
+  width: 200%;
+  height: 200%;
+  border: 1px solid #2196F3;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: scale(0.5);
+  transform: scale(0.5);
+  border-radius: 4px; 
 }
 .addresss:after{
   content: '';
   height: 0;
 }
-.services ul{
+.services{
     background: #fff;
     margin-bottom: 10px;
     margin-top: 10px;
 }
 .services ul li{
-  padding: 15px 0 0 15px;
+  padding: 0 0 0 15px;
   min-height: 60px;
   position: relative
 }
@@ -408,6 +425,14 @@ export default {
   color: #222222;
   line-height: 27px;
   padding: 10px 0 0 15px;
+  background: #fff;
+}
+.consult{
+  font-size: 12px;
+  color: #999999;
+  letter-spacing: 0;
+  line-height: 43px;
+  text-align: center;
   background: #fff;
 }
 </style>

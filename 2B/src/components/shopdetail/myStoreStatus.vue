@@ -58,6 +58,7 @@ export default {
     color: #333333;
     letter-spacing: 0;
     line-height: 28px;
+    font-weight: bold
   }
   .status,.statusOK{
     text-align: right;

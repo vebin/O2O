@@ -29,10 +29,25 @@ export default {
     border-radius: 2px;
     font-size: 12px;
     letter-spacing: 0;
-    line-height: 18px;
-    padding: 3px 8px;
-    border: 1px solid #ccc;
+    line-height: 24px;
+    padding: 0 8px;
+    display: inline-block;
     color: #666;
+    position: relative;
+  }
+  .tag:after{
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: -1px;
+    width: 200%;
+    height: 200%;
+    border: 1px solid #ccc;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    border-radius: 4px; 
   }
   .two{
     border: 1px solid #FE7302;

@@ -175,6 +175,7 @@ export default {
           _this.$store.dispatch('myshopdata', {lng: `${r.point.lng}`, lat: `${r.point.lat}`})
           if (_this.$route.params.text==='经销商' ) {
             _this.getDealer()
+            console.log(999)
           } else {
             _this.getData()
           }
