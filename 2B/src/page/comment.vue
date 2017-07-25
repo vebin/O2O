@@ -40,7 +40,6 @@ export default {
     ...mapActions(['toggleToast']),
     setTags () {
       XHR.getCommentTags().then(res => {
-        console.log(res);
         let data = [...res.data.data]
         if (res.data.status === 1) {
           data.forEach(item => {
@@ -64,9 +63,6 @@ export default {
       if (!this.lock) {
         return
       }
-      // if ((this.textarea.length >= this.textareaMinLength || this.checkedTags.size) && !this.checkData()) {
-      //   return
-      // }
       if (!(this.textarea.length >= this.textareaMinLength || this.checkedTags.size)) {
         return
       }
@@ -76,7 +72,6 @@ export default {
         lables: [...this.checkedTags].join(','),
         info: this.textarea
       }).then(res => {
-        console.log(res)
         let data = res.data
         if (data.status === 1) { // 评价成功
           this.showToast('评价成功')
@@ -92,13 +87,6 @@ export default {
         this.lock = true
       })
     },
-    // checkData () {
-    //   if (this.textarea.length < this.textareaMinLength) {
-    //     this.showToast(`您最少需要输${this.textareaMinLength}个字`)
-    //     return false
-    //   }
-    //   return true
-    // },
     showToast (cont) {
       this.toast = cont
       this.toggleToast()
@@ -112,6 +100,7 @@ export default {
     height: 100%;
     box-sizing: border-box;
     padding: 15px;
+    background: #fff;
   }
   textarea {
     outline: 0;
@@ -155,7 +144,7 @@ export default {
     border-radius: 4px;
     background: #FAFAFA;
     font-size: 16px;
-    color: #999999;
+    color: #333;
     line-height: 24px;
     padding: 10px;
     box-sizing: border-box;

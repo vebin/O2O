@@ -1,5 +1,7 @@
 <template lang="html">
-  <div>{{msg}}</div>
+  <div class="wraper">
+    <div class="toast">{{msg}}</div>
+  </div>
 </template>
 
 <script>
@@ -7,16 +9,14 @@ import { mapActions } from 'vuex'
 export default {
   props: ['msg'],
   data () {
-    return {
-
-    }
+    return {}
   },
   created () {
     this.$store.state.page.toastLock = false
     setTimeout( () => {
       this.$store.state.page.toastLock = true
       this.toggleToast()
-    }, 3000)
+    }, 30000)
   },
   methods: {
     ...mapActions(['toggleToast'])
@@ -31,8 +31,15 @@ export default {
     85%  {opacity: 1;}
     100% {opacity: 0;}
   }
-  div {
-    max-width: 200px;
+  .wraper {
+    width: 100%;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    padding: 0;
+  }
+  .toast {
+    max-width: 80%;
     padding: 8px 7px;
     background-color: rgba(0,0,0,0.70);
     border-radius: 5px;
@@ -41,11 +48,12 @@ export default {
     letter-spacing: 0;
     line-height: 16px;
     text-shadow: 1.5px 1.5px 0 #555555;
-    position: fixed;
-    left: 50%;
-    top: 50%;
     transform: translate(-50%,-50%);
     opacity: 0;
-    animation: fade 3s;
+    animation: fade 30s;
+    display: table;
+    /*position: absolute;
+    left: -50%;
+    top: -50%;*/
   }
 </style>
