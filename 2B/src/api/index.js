@@ -174,6 +174,22 @@ class XHR {
  getComment (json) {
     return fetch({
       url: `${URLS}/shopout/commentlist.aspx`,
+       body: json,
+      type: 'GET'
+    })
+  }
+// 判断用户是否24小时内评论过店铺
+  checkCommentStatus (json) {
+    return fetch({
+      url: `${URLS}/shopout/iscommented.aspx`,
+      body: json,
+      type: 'GET'
+    })
+  }
+// 获取评价标签
+  getCommentTags (json) {
+    return fetch({
+      url: `${URLS}/cm/commentlables.aspx`,
       body: json,
       type: 'GET'
     })

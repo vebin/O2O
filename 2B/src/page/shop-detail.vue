@@ -45,14 +45,14 @@
         </ul>
         <div class="consult">价格仅作参考</div>
       </div>
-      <div class="comments" v-if="discuss.length">
-        <header>卡友评价（{{discuss.length}}）</header>
+      <div class="comments" v-if="ShopInfo.business.length">
+        <header>卡友评价（{{ShopInfo.business.length}}）</header>
         <ul>
-          <li v-for="item in discuss" >
+          <li v-for="item in ShopInfo.business" >
             <comments-item :comment="item"></comments-item>
           </li>
         </ul>
-        <div v-if="discuss.length">
+        <div>
             <loading :end="list_end" :loading="loading"></loading>
         </div>
       </div>
@@ -61,6 +61,7 @@
     <div class="footer">
       <shopfooter :shopinfo="ShopInfo" :photo="photo"></shopfooter>
     </div>
+    <toast :msg="toast" v-if="page.toast"></toast>
   </div>
 </template>
 
@@ -78,8 +79,9 @@ import Description from '../components/shopdetail/shop-descript.vue'
 import ServicesItem from '../components/shopdetail/important-service.vue'
 import CommentsItem from '../components/shopdetail/comment.vue'
 import Loading from '../components/global/loading.vue'
+import Toast from '../components/global/comment-toast.vue'
 export default {
-  components: {MyStoreStatus, Tag, GetAddress, Shopfooter, DrivingCell, DataNull, GoBack, Description, ServicesItem, CommentsItem, Loading},
+  components: {MyStoreStatus, Tag, GetAddress, Shopfooter, DrivingCell, DataNull, GoBack, Description, ServicesItem, CommentsItem, Loading, Toast},
   data () {
     return {
       headstatus: 1,
@@ -95,6 +97,7 @@ export default {
       discuss: [],
       list_end: false,
       loading: false,
+      toast:'',
       business: 
       [
           {
@@ -311,10 +314,14 @@ export default {
   .cells.service:after{
     content: '';
     height: 0;
+    border: none;
   }
   .driving-list ul li{
     padding: 15px 15px 15px 0;
     border-bottom: 1px solid #e5e5e5;
+  }
+  .driving-list ul li:last-child{
+    border: none;
   }
   .shop-info{ 
     border-bottom: 10px solid #F5F5F5;

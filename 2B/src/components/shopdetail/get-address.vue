@@ -30,6 +30,7 @@ export default {
 .cell-input{
   position: relative;
   padding: 5px 0;
+  font-size: 16px;
 }
 .location:before{
 	content:'\e693';

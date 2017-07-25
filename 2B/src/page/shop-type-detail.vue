@@ -52,6 +52,7 @@ export default {
     } else {
       this.setCitysn()
     }
+    
   },
   data () {
     return {
@@ -72,6 +73,12 @@ export default {
     this.rePosition()
   },
   methods: {
+    getAddres () {
+      let datas = storage.get('data')
+          datas = JSON.parse(datas)
+      this.ShopData.lng = datas.lng
+      this.ShopData.lat = datas.lat
+    },
     settitle () {     // 设置标题
       if (this.setApp()==='other') {
         window.document.title = this.$route.params.text
@@ -154,7 +161,7 @@ export default {
           success: function (res) {
             let wxLocation = _this.gcj02tobd09(res.longitude,res.latitude)
             _this.$store.dispatch('myshopdata', {lng: `${wxLocation.lng}`, lat: `${wxLocation.lat}`})
-            if (_this.$route.params.text==='经销商' ) {
+            if (_this.$route.params.typeid==='9' ) {
               _this.getDealer()
             } else {
               _this.getData()
@@ -173,9 +180,8 @@ export default {
       truckhomeRegion.getCurrentPosition(function (r) {
         if (this.getStatus() == BMAP_STATUS_SUCCESS) {
           _this.$store.dispatch('myshopdata', {lng: `${r.point.lng}`, lat: `${r.point.lat}`})
-          if (_this.$route.params.text==='经销商' ) {
+          if (_this.$route.params.typeid==='9' ) {
             _this.getDealer()
-            console.log(999)
           } else {
             _this.getData()
           }
@@ -187,9 +193,11 @@ export default {
     },
     loadMore (e) {
       this.gotopStatus = e.target.scrollTop >= e.target.offsetHeight*2 ? true : false;
+      console.log(this.loamore)
       if (e.target.scrollTop + window.innerHeight >= e.target.scrollHeight && !this.loamore) {
         this.loamore = true
-        if (this.$route.params.text==='经销商' ) {
+        if (this.$route.params.typeid==='9' ) {
+          this.getAddres()
           let json = {
             lng: this.ShopData.lng,
             lat: this.ShopData.lat,
@@ -197,16 +205,6 @@ export default {
           }
           XHR.getdealer(json).then((res) => {
             this.renderShops(res.data)
-            // for (var i = 0; i < res.data.datalist.length; i++) {
-            //   this.shops.push(res.data.datalist[i])
-            // }
-            // if (res.data.datalist.length >= 20) {
-            //   this.loamore = false
-            //   this.pagenum++
-            // } else{
-            //   this.loamore = true
-            //   this.list_end = true
-            // }
           })
         } else{
           let json = {
@@ -220,16 +218,6 @@ export default {
           }
           XHR.nearbyShopList(json).then((res) => {
             this.renderShops(res)
-            // for (var i = 0; i < res.data.length; i++) {
-            //   this.shops.push(res.data[i])
-            // }
-            // if (res.data.length >= 20) {
-            //   this.loamore = false
-            //   this.pagenum++
-            // } else{
-            //   this.loamore = true
-            //   this.list_end = true
-            // }
           })
         }
       }

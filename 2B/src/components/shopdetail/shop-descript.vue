@@ -63,6 +63,7 @@ export default {
     color: #666666;
     line-height: 22px;
     padding-bottom: 15px;
+    word-break: break-all
   }
   .main .more, .main .back {
     color: #FF6600;

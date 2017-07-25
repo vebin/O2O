@@ -18,6 +18,7 @@
 </div>
 </template>
 <script>
+import XHR from '../../api'
 export default {
   props: ['shopinfo','photo'],
   data () {
@@ -61,8 +62,19 @@ export default {
           this.callNativeMethod("onLogin",{})
         }
       } else{
-        console.log(this.$el.querySelector('a').href)
-        window.location.href = this.$el.querySelector('a').href
+        let json = {
+          shopId:this.$route.params.shopid,
+          bbsid:this.ShopData.bbsid
+        }
+        XHR.checkCommentStatus(json).then((res)=>{
+          if (res.data.status === 1) {
+            window.location.href = this.$el.querySelector('a').href
+          }else{
+            this.page.toast = true
+            this.$parent.toast= res.data.msg
+          }
+        })
+        
       }
     },
     share () {
@@ -109,6 +121,8 @@ export default {
     align-items: center;
     color: #fff;
     justify-content: center;
+    background: #FFFFFF;
+    box-shadow: 0 -2px 6px 0 rgba(0,0,0,0.05);
   }
   .info{
     position: relative;

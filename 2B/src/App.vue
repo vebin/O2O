@@ -55,13 +55,18 @@ export default {
   overflow: hidden;
 }
 .cells:after{
+  content: "";
   position: absolute;
   left: 15px;
   bottom: 0;
-  content: "";
   width: 100%;
   height: 1px;
-  background: #E5E5E5;
+  border-bottom: 1px solid #E5E5E5;
+  color: #D5D5D6;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
 }
 .cell-title{
   font-size: 16px;

@@ -2,14 +2,14 @@
   <div class="main">
     <div class="userInfoArea">
       <figure>
-        <img :src="comment.avatar" alt="">
+        <img :src="comment.avatar">
       </figure>
       <span>{{comment.nickName}}</span>
     </div>
     <ul class="tags">
       <li v-for="(item,index) in comment.lables" :class="index < 3 ? 'active':'' ">{{item.lableName}}</li>
     </ul>
-    <p class="commentInfo">{{comment.commentInfo}}</p>
+    <p class="commentInfo"  v-if="comment.commentInfo">{{comment.commentInfo}}</p>
   </div>
 </template>
 <script>
@@ -19,7 +19,6 @@ export default {
     return {}
   },
   created(){
-    console.log(this.comment)
   }
 }
 </script>
@@ -28,9 +27,6 @@ export default {
     position: relative;
   }
   .main figure {
-    position: absolute;
-    top: 15px;
-    left: 0;
     width: 32px;
     height: 32px;
   }
@@ -43,16 +39,17 @@ export default {
   }
   .userInfoArea {
     position: relative;
-    padding-left: 42px;
+    display: flex;
+    align-items: center;
+    padding-top: 12px;
   }
   .userInfoArea span {
     font-size: 16px;
     color: #2062A9;
     letter-spacing: 0;
     line-height: 16px;
-    padding-top: 23px;
-    padding-bottom: 20px;
-    display: block;
+    flex: 1;
+    margin-left: 10px;
   }
   .tags {
     font-size: 0;
@@ -66,7 +63,7 @@ export default {
     line-height: 26px;
     color: #666;
     margin-right: 10px;
-    margin-bottom: 15px;
+    margin-top: 12px;
     background-color: #eee;
     font-size: 14px;
   }
@@ -78,5 +75,6 @@ export default {
     color: #333333;
     letter-spacing: 0;
     line-height: 24px;
+    margin-top: 12px;
   }
 </style>

@@ -104,7 +104,7 @@ export default {
     height: 20px;
     top: 15px;
     right: 0;
-    background: #09BB07;
+    background: rgba(255,102,0,0.10);
     opacity: 0.3;
   }
   .app-my-upload:after{

@@ -32,7 +32,7 @@ export default {
     100% {opacity: 0;}
   }
   div {
-    max-width: 200px;
+    max-width: 260px;
     padding: 8px 7px;
     background-color: rgba(0,0,0,0.70);
     border-radius: 5px;

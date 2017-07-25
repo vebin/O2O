@@ -68,10 +68,6 @@ export default {
       let nowSource = this.$route.path
       if (nowSource && nowSource.indexOf("ShopTypeDetail") > -1) {
          if (this.$route.params.typeid === '9') {
-            if (storage.get('dealer')) {
-                storage.remove('dealer')
-              }
-              storage.set('dealer', 'true')
               location.href = `https://dealerm.360che.com/${this.shopData.id}`
           } else {
             location.href = this.$el.href
