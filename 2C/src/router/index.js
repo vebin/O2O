@@ -14,6 +14,7 @@ import AddLicenseInfo from '../page/addLicenseInfo'
 import MyShopEdit from '../page/my-shop-edit.vue'
 import MyShopStatus from '../page/my-shop-status.vue'
 import LocationLook from '../page/location-look.vue'
+import MainBusiness from '../page/main-business.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -87,6 +88,11 @@ export default new Router({
       path: '/LocationLook/:lng/:lat',
       name: 'LocationLook',
       component: LocationLook
+    },
+    {
+      path: '/MainBusiness/:shopid',
+      name: 'MainBusiness',
+      component: MainBusiness
     }
   ]
 })

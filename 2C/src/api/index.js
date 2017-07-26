@@ -175,5 +175,21 @@ class XHR {
       type: 'GET'
     })
   }
+  // 添加主营业务
+  addMainBusiness (json) {
+    return fetch({
+      url: `${URLS}/shopin/businessin.aspx`,
+      body: json,
+      type: 'GET'
+    })
+  }
+  // 删除主营业务
+  deleteMainBusiness (json) {
+    return fetch({
+      url: `${URLS}/shopin/businessdel.aspx`,
+      body: json,
+      type: 'GET'
+    })
+  }
 }
 export default new XHR()
