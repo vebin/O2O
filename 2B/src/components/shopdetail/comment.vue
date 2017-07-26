@@ -1,5 +1,5 @@
 <template>
-  <li class="main">
+  <div class="main">
     <div class="userInfoArea">
       <figure>
         <img :src="comment.avatar">
@@ -10,7 +10,7 @@
       <li v-for="(item,index) in comment.lables" :class="index < 3 ? 'active':'' ">{{item.lableName}}</li>
     </ul>
     <p class="commentInfo" v-if="comment.commentInfo.length">{{comment.commentInfo}}</p>
-  </li>
+  </div>
 </template>
 <script>
 export default {
@@ -26,6 +26,7 @@ export default {
     background: #fff;
     padding-bottom: 15px;
     position: relative;
+    
   }
   .main::after {
     position: absolute;
@@ -38,9 +39,6 @@ export default {
     transform: scaleY(0.5);
   }
   .main figure {
-    position: absolute;
-    top: 15px;
-    left: 0;
     width: 32px;
     height: 32px;
   }
@@ -53,16 +51,18 @@ export default {
   }
   .userInfoArea {
     position: relative;
-    padding-left: 42px;
+    display: flex;
+    align-items: center;
+    padding-top: 12px;
   }
   .userInfoArea span {
     font-size: 16px;
     color: #2062A9;
     letter-spacing: 0;
     line-height: 16px;
-    padding-top: 23px;
-    padding-bottom: 20px;
     display: block;
+    flex: 1;
+    margin-left: 10px;
   }
   .tags {
     font-size: 0;
@@ -76,7 +76,7 @@ export default {
     line-height: 26px;
     color: #666;
     margin-right: 10px;
-    margin-bottom: 15px;
+    margin-top: 12px;
     background-color: #eee;
     font-size: 14px;
   }

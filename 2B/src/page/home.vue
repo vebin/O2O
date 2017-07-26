@@ -112,11 +112,11 @@ export default {
         this.renderShops(cache)
       } else {                       // 判断是不是客户端 进行不同的定位
         if (this.setApp()==='other') {
-          // this.getlocation() 线上
-          this.webGetLocation()
+          this.getlocation() 
+          // this.webGetLocation() 测试
         } else {
-          // this.webGetLocation()  线上
-          this.getlocation()
+          this.webGetLocation()  
+          // this.getlocation()  测试
         }
       }
     }

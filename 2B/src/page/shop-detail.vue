@@ -1,9 +1,12 @@
 <template>
   <div class="wrapper">
     <div class="content" @scroll="loadMore">
-      <figure class="shop-img">
+      <figure class="shop-img" v-if="photos.length === 1">
         <img :src="photo" :alt="ShopInfo.name" ref="img">
       </figure>
+      <div v-if="photos.length > 1">
+        <photos :photoItems="photos"></photos>
+      </div>
       <div class="reject" v-if="ShopInfo.auditstate=='2'">
         驳回原因：{{ShopInfo.faildescription}}
       </div>
@@ -37,7 +40,7 @@
       <div v-if="ShopInfo.description">
         <description :descript="ShopInfo.description" ></description>
       </div>
-      <div class="services" v-if="ShopInfo.business!==[]">
+      <div class="services" v-if="business">
         <ul>
           <li v-for="(item, index) in ShopInfo.business" >
             <services-item :service="item"></services-item>
@@ -80,8 +83,9 @@ import ServicesItem from '../components/shopdetail/important-service.vue'
 import CommentsItem from '../components/shopdetail/comment.vue'
 import Loading from '../components/global/loading.vue'
 import Toast from '../components/global/comment-toast.vue'
+import Photos from '../components/shopdetail/photos.vue'
 export default {
-  components: {MyStoreStatus, Tag, GetAddress, Shopfooter, DrivingCell, DataNull, GoBack, Description, ServicesItem, CommentsItem, Loading, Toast},
+  components: {MyStoreStatus, Tag, GetAddress, Shopfooter, DrivingCell, DataNull, GoBack, Description, ServicesItem, CommentsItem, Loading, Toast, Photos},
   data () {
     return {
       headstatus: 1,
@@ -98,7 +102,8 @@ export default {
       list_end: false,
       loading: false,
       toast:'',
-      business:false
+      business:false,
+      photos:[]
     }
   },
   created () {
@@ -119,11 +124,15 @@ export default {
   },
   mounted () {  // 默认图片
     this.settitle()
-    this.$refs.img.onerror = () => {
-      this.photo = `https://s.kcimg.cn/wap/images/detail/o2oImg/onerror_${this.ShopInfo.typeid}.png`
-    }
   },
   methods: {
+    imgerror () {
+      if (this.photos.length === 1) {
+        this.$refs.img.onerror = () => {
+          this.photo = `https://s.kcimg.cn/wap/images/detail/o2oImg/onerror_${this.ShopInfo.typeid}.png`
+        }
+      }
+    },
     comments () {
        XHR.getComment({'shopId':this.$route.params.shopid, 'page': this.pages}).then((res) => {
           this.discuss = res.data.data
@@ -190,8 +199,15 @@ export default {
     getDetailInfo () {                    // 通过审核店铺数据
       XHR.getShoperInfo({'shopid': this.$route.params.shopid}).then((res) => {
         this.ShopInfo = res.data
+        this.photos = res.data.photos
+        this.$nextTick(()=>{
+          this.imgerror()
+          if (res.data.business.length > 0) {
+            this.business = true
+          }
+        })
         let c = res.data.linkcall
-        this.ShopInfo.linkcall = c.substring(0,11)
+        this.ShopInfo.linkcall = c.length<11 ? '' : c.substring(0,11)
         this.photo = res.data.photo
         let typetext = res.data.typeshow
         if (typetext === '驾校') {
@@ -213,9 +229,16 @@ export default {
     getDetailInfoWait () {             // 未通过审核店铺数据
       XHR.noAdoptInfo({'waiterid': this.$route.params.shopid}).then((res) => {
         this.ShopInfo = res.data
+        this.photos = res.data.photos
+        this.$nextTick(()=>{
+          this.imgerror()
+          if (res.data.business.length > 0) {
+            this.business = true
+          }
+        })
         // 取电话11位
         let c = res.data.linkcall
-        this.ShopInfo.linkcall = c.substring(0,11)
+        this.ShopInfo.linkcall = c.length<11 ? '' : c.substring(0,11)
         this.photo = res.data.photo
         let typetext = res.data.typeshow
         if (typetext === '驾校') {
@@ -382,7 +405,6 @@ export default {
 }
 .services{
     background: #fff;
-    margin-bottom: 10px;
     margin-top: 10px;
 }
 .services ul li{
@@ -390,10 +412,17 @@ export default {
   min-height: 60px;
   position: relative
 }
+.comments{
+  margin-top: 10px;
+}
+.comments ul{
+  overflow: hidden
+}
 .comments ul li{
-  padding: 0 15px 15px;
+  padding: 0 15px;
   position: relative;
   background: #fff;
+  box-sizing: border-box
 }
 .comments ul li:after{
   content: " ";

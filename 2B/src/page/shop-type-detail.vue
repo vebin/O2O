@@ -97,11 +97,11 @@ export default {
           this.getData()
         } else{
           if (this.setApp()!=='other') {
-            // this.webGetLocation()  线上
-            this.getlocation()
+            this.webGetLocation()  
+            // this.getlocation()  测试
           } else{
-            // this.getlocation()   线上
-            this.webGetLocation()
+            this.getlocation()   
+            // this.webGetLocation() 测试
           }
         }
       }

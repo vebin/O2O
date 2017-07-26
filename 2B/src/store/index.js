@@ -46,7 +46,7 @@ const store = new Vuex.Store({
       linkman: '',
       linkcall: '',
       recommendertype: 2,
-      bbsid: '531392',
+      bbsid: '',
       bbsname: '',
       shopimg: '',
     },

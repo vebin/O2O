@@ -54,16 +54,7 @@ import Loading from '../components/global/loading.vue'
 export default {
   components: { NearbyList, DataNull, GoBack, Loading},
   created () {
-    var userid = document.cookie.match(/AbcfN_ajaxuid=([^;$]+)/)
-    var Cookieuid = document.cookie.match(/ForHelp_ajaxuid=([^;$]+)/);
-    if (userid) {
-      this.uid = userid[1]
-      this.setdata({'bbsid': `${userid[1]}`, 'bbsname': ``})
-    } else if(Cookieuid) {
-      this.uid = Cookieuid[1]
-      this.setdata({'bbsid': `${Cookieuid[1]}`, 'bbsname': ``})
-    }
-    XHR.myUploadShop({'bbsid':this.uid}).then((res) => {
+    XHR.myUploadShop({'bbsid':this.ShopData.bbsid}).then((res) => {
       this.loading = false
       this.audit = res.data.audit
       this.passed = res.data.passed
