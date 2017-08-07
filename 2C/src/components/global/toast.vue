@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="wraper-toast">
+  <div class="toast-wraper">
     <div class="toast">{{msg}}</div>
   </div>
 </template>
@@ -12,9 +12,9 @@ export default {
     return {}
   },
   created () {
-    this.$store.state.page.toastLock = false
+    this.$store.state.toast.toastLock = false
     setTimeout( () => {
-      this.$store.state.page.toastLock = true
+      this.$store.state.toast.toastLock = true
       this.toggleToast()
     }, 2000)
   },
@@ -31,7 +31,7 @@ export default {
     85%  {opacity: 1;}
     100% {opacity: 0;}
   }
-  .wraper-toast {
+  .toast-wraper {
     width: 100%;
     position: fixed;
     left: 50%;

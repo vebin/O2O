@@ -47,6 +47,7 @@
 
 <script>
 import XHR from '../api'
+import storage from '../store/storage.js'
 import NearbyList from '../components/global/nearby-list.vue'
 import DataNull from '../components/global/data-null.vue'
 import GoBack from '../components/global/go-back.vue'
@@ -54,12 +55,17 @@ import Loading from '../components/global/loading.vue'
 export default {
   components: { NearbyList, DataNull, GoBack, Loading},
   created () {
-    XHR.myUploadShop({'bbsid':this.ShopData.bbsid}).then((res) => {
-      this.loading = false
-      this.audit = res.data.audit
-      this.passed = res.data.passed
-      this.refuse = res.data.refuse
-    })
+    let joinInfo = JSON.parse(storage.get('recommend'))
+    if (joinInfo.bbsid) {
+      XHR.myUploadShop({'bbsid':joinInfo.bbsid}).then((res) => {
+        this.loading = false
+        this.audit = res.data.audit
+        this.passed = res.data.passed
+        this.refuse = res.data.refuse
+      }).catch(() => {
+        alert("请求失败")
+      })
+    }
   },
   data () {
     return {

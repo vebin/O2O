@@ -14,6 +14,8 @@ import AddLicenseInfo from '../page/addLicenseInfo'
 import MyShopEdit from '../page/my-shop-edit.vue'
 import MyShopStatus from '../page/my-shop-status.vue'
 import LocationLook from '../page/location-look.vue'
+import MainBusiness from '../page/main-business.vue'
+import UploadShop from '../page/uploadShop.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -84,9 +86,19 @@ export default new Router({
       component: MyShopStatus
     },
     {
+      path: '/UploadShop',
+      name: 'UploadShop',
+      component: UploadShop
+    },
+    {
       path: '/LocationLook/:lng/:lat',
       name: 'LocationLook',
       component: LocationLook
+    },
+    {
+      path: '/MainBusiness/:shopid',
+      name: 'MainBusiness',
+      component: MainBusiness
     }
   ]
 })

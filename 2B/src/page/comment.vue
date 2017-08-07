@@ -36,6 +36,9 @@ export default {
     this.shopId = this.$route.params.shopid
     this.setTags()
   },
+  mounted () {
+    this.settitle()
+  },
   methods: {
     ...mapActions(['toggleToast']),
     setTags () {
@@ -51,6 +54,15 @@ export default {
         console.log(err)
       })
     },
+    settitle () {     // 设置标题
+      if (this.setApp()==='other') {
+        window.document.title = '快速评价'
+        this.getWxconfig()
+        this.hideshare()
+      } else {
+        this.callNativeMethod("onChangeWebTitle",{changeWebTitle:'快速评价'})
+      }
+    },
     clickTag (val, index) {
       this.tags[index].checked = !this.tags[index].checked
       if (this.checkedTags.has(val.Id)) {
@@ -61,6 +73,10 @@ export default {
     },
     submit () {
       if (!this.lock) {
+        return
+      }
+      if (this.textarea && this.textarea.length < 5) {
+        this.showToast('您最少需要输入5个字')
         return
       }
       if (!(this.textarea.length >= this.textareaMinLength || this.checkedTags.size)) {
@@ -129,8 +145,9 @@ export default {
     display: inline-block;
   }
   .tags .tag-active {
-    background-color: #FF6600;
+    border-color: #FF6600;
     color: #fff;
+    background: #FF6600;
     box-shadow: 0 2px 4px 0 rgba(255,102,0,0.30);
   }
   .commen-area {

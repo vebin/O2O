@@ -209,7 +209,6 @@ export default {
           this.$store.dispatch('setEdit', {'submitStatus': false})
         }
       }
-      console.log(joinInfo)
     },
     setDriverStatus () {
       let drivers = JSON.parse(storage.get('drivedetail'))

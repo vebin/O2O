@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     getAddres () {
-      let datas = storage.get('data')
+      let datas = storage.get('recommend')
           datas = JSON.parse(datas)
       this.ShopData.lng = datas.lng
       this.ShopData.lat = datas.lat

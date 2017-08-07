@@ -2,11 +2,11 @@
   <div class="header">
     <img :src="page.shopimg" alt="" class="bg" v-if="page.source!='驾照'">
     <img :src="driver.driverImg" alt="" class="bg" v-if="page.source=='驾照'">
-    <div class="photo" v-if="page.imgStatus=='1'" @click="uploadImg">
+    <div class="photo" v-if="page.imgStatus==='1'" @click="uploadImg">
       <span>{{text}}</span>
       <input type="file" class="upload" @change="iphoneOldChange" accept="image/jpg,image/jpeg,image/png,image/gif" v-if="iphoneOld" @click.stop>
     </div>
-    <span class="again-set-img" v-if="page.imgStatus=='2'" @click="uploadImg">修改
+    <span class="again-set-img" v-if="page.imgStatus==='2'" @click="uploadImg">修改
       <input type="file" class="upload" @change="iphoneOldChange" accept="image/jpg,image/jpeg,image/png,image/gif" v-if="iphoneOld" @click.stop>
     </span>
   </div>
@@ -112,7 +112,11 @@ export default {
         }else if(this.setApp()==='appOld'){
           console.log('旧版本之下input方法')
         } else {
-          this.uploadNewImg('shoping')
+          if (this.page.source==='编辑') {
+            this.jump(`/UploadShop`)
+          }else{
+            this.uploadNewImg('shoping')
+          }
         }
       } else {
         if (this.setApp()==='appNew'){
@@ -131,7 +135,7 @@ export default {
 
 <style scoped>
 .header{
-  height: 210px;
+  min-height: 180px;
   width: 100%;
   position: relative;
   overflow: hidden;

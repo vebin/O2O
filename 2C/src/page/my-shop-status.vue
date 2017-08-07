@@ -1,7 +1,10 @@
 <template>
 <div class="wraper">
   <div class="content">
-    <figure class="shop-img"><img :src="photo" :alt="pageInfo.name" ref="img"></figure>
+    <figure class="shop-img" v-if="photos.length === 1"><img :src="photo" :alt="pageInfo.name" ref="img"></figure>
+    <div v-if="photos.length > 1">
+        <photos :photoItems="photos"></photos>
+    </div>
     <statusTips :reasonContent='pageInfo' v-if="pageInfo.auditstate=='2'"></statusTips>
     <div class="shop-info">
       <my-store-status :storeTitle="pageInfo" :storeStatus="storeStatus"></my-store-status>
@@ -11,7 +14,7 @@
         </li>
       </ul>
     </div>
-    <div @click="getAddress">
+    <div @click="getAddress" class="address">
       <get-address :pageInfo="pageInfo"></get-address>
     </div>
     <div class="cells" v-if="pageInfo.typeshow=='服务站'">
@@ -26,11 +29,15 @@
     <div class="cells">
       <span class="cell-title cell-name">手机号</span>{{pageInfo.linkcall}}
     </div>
-    <div class="cells" @click="jump(`/LicenseList/${pageInfo.id}`)" v-if="pageInfo.typeshow=='驾校'&& pageInfo.auditstate == '1'">
+    <div class="cells-textarea">
+      <label class="cell-title text-label">店铺业务</label>
+      <div class="cell-textarea">{{pageInfo.description}}</div>
+    </div>
+    <!-- <div class="cells" @click="jump(`/LicenseList/${pageInfo.id}`)" v-if="pageInfo.typeshow=='驾校'&& pageInfo.auditstate == '1'">
       <label class="cell-title">驾照类型</label>
       <input type="text" placeholder=""  class="cell-input" disabled="" />
       <span class="cell-arrow"></span>
-    </div>
+    </div> -->
     <div class="editButton" @click="jump(`/MyShopEdit/${passStatus}`)" v-if="storeStatus == '已驳回'">
       <span>编辑</span>
     </div>
@@ -44,9 +51,10 @@ import StatusTips from '../components/global/statusTips.vue'
 import GetAddress from '../components/myshop/get-address.vue'
 import MyStoreStatus from '../components/myshop/myStoreStatus'
 import Tag from '../components/myshop/tag'
+import Photos from '../components/global/photos.vue'
 import storage from '../store/storage.js'
 export default {
-  components: {StatusTips, Tag, GetAddress, MyStoreStatus},
+  components: {StatusTips, Tag, GetAddress, MyStoreStatus,Photos},
   data () {
     return {
       status: 1,
@@ -56,8 +64,10 @@ export default {
       shopid: '',
       typeshow: [],
       photo: '',
+      photos:[],        //多图
       brands:[],     // 品牌id
-      brandname:[]    // 品牌名字
+      brandname:[],    // 品牌名字
+      serveID:[]         // 要提交的照片信息
     }
   },
   computed: {
@@ -70,10 +80,6 @@ export default {
   },
   mounted () {  
     this.settitle()
-    this.$refs.img.onerror = () => {  // 默认图片
-      this.photo = `https://s.kcimg.cn/wap/images/detail/o2oImg/onerror_${this.pageInfo.typeid}.png`
-      this.setdata({'shopimgPreview':this.photo})
-    }
   },
   methods: {
     settitle () {     // 设置标题
@@ -82,6 +88,14 @@ export default {
       } else {
         window.document.title = '我的店铺'
         this.hideshare()
+      }
+    },
+    imgerror () {
+      if(this.photos.length===1){
+        this.$refs.img.onerror = () => {
+          this.photo = `https://s.kcimg.cn/wap/images/detail/o2oImg/onerror_${this.pageInfo.typeid}.png`
+          this.setdata({'shopimgPreview':this.photo})
+        }
       }
     },
     savaInfo () {
@@ -95,8 +109,15 @@ export default {
         'shopimgPreview':this.photo,
         'lng':this.pageInfo.lng,
         'lat':this.pageInfo.lat,
-        'shoptypeshow':this.pageInfo.typeshow
+        'shoptypeshow':this.pageInfo.typeshow,
+        'description':this.pageInfo.description,
+        'photos':this.photos,
+        'serverItems':null
       }
+      for (var i = 0; i < this.photos.length; i++) {
+        this.serveID.push(this.photos[i].imgUrl)
+      }
+      json.serverItems=this.serveID
       if (this.pageInfo.typeshow.indexOf('维修') >= 0) {
         json.shoptype = '维修'
       } else {
@@ -124,6 +145,12 @@ export default {
       XHR.editInfo({'shopId':this.shopid}).then((res)=>{
         this.pageInfo = res.data.data
         this.photo = this.pageInfo.photo
+        this.photos = this.pageInfo.photos
+
+        this.$nextTick(()=>{
+          this.imgerror()
+        })
+        this.tag(this.pageInfo.typeshow)
         if (this.pageInfo.auditstate==='0') { 
           this.storeStatus = '审核中'
         } else if(this.pageInfo.auditstate==='2'){
@@ -136,6 +163,7 @@ export default {
       })
     },
     tag (typetext) {
+      console.log(typetext)
       if (typetext.indexOf('维修') >= 0) {
         if (typetext === '维修') {
           this.typeshow.push('维修')
@@ -175,11 +203,11 @@ export default {
   flex-direction: column;
 }
 .shop-img{
-  height: 210px;
+  min-height: 180px;
   position: relative;overflow: hidden;flex: 1;z-index: 1;display: flex;flex-direction: column;flex-wrap: wrap;
 }
 .shop-img img{
-  width:100%;height:100%;-webkit-object-fit: cover;object-fit: cover;display: block;
+  width:100%;height:100%;display: block;
 }
 .content {
   flex:1;
@@ -223,26 +251,71 @@ export default {
   padding:30px 15px 0;
 }
 .editButton span{
-    width: 100%;
-    display: block;
-    height: 45px;
-    background: #09BB07;
-    border-radius: 5px;
-    font-size: 16px;
-    color: #fff;
-    text-align: center;
-    line-height: 45px;
-    margin-top: 30px;
+  width: 100%;
+  display: block;
+  height: 45px;
+  background:rgba(255,102,0,1);
+  border-radius: 5px;
+  font-size: 16px;
+  color: #fff;
+  text-align: center;
+  line-height: 45px;
+  margin-top: 30px;
   }
-  .cell-name{
-    margin-right: 13px;
-  }
-.shop-info{margin-bottom: 10px;padding-bottom: 15px;background: #fff}
- .tags{
-    padding-left: 15px;
-  }
+.cell-name{
+  margin-right: 13px;
+}
+.shop-info{
+  background: #fff
+}
+.address{
+  margin-bottom: 10px;
+  position: relative
+}
+.address .cells:before{
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 1px;
+  border-top: 1px solid #e5e5e5;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+.address .cells:after{
+  height: 0;
+  border: none;
+}
+.tags{
+  padding-left: 15px;
+}
 .tags li{
-    margin-right: 10px;
-    display: inline-block;
-  }
+  margin-right: 10px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.cells-textarea{
+  word-break: break-all;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background: #fff;
+}
+.text-label{
+  margin-top: 10px;
+}
+.cell-textarea{
+  flex: 1;
+  padding: 10px;
+  min-height: 68px;
+  resize: none;
+  font-size: 16px;
+  color: #333333;
+  letter-spacing: 0;
+  line-height: 24px;
+}
 </style>

@@ -26,7 +26,7 @@ export default {
     shopdata () { return this.$store.state.ShopData }
   },
   created () {
-    let joinInfo = storage.get('data')
+    let joinInfo = storage.get('recommend')
     if (joinInfo) {
       this.phone = JSON.parse(joinInfo).linkcall
     }
@@ -46,6 +46,7 @@ export default {
           this.$store.dispatch('setEdit', {'submitStatus': false})
         }
       } else {
+        this.$store.dispatch('setEdit', {'submitStatus': false})
         this.setdata({'linkcall':this.phone})
       }
     }

@@ -1,21 +1,61 @@
 <template>
   <div class="main-photo">
-    <div class="photo" v-if="imgItems.length" v-for="(item, index) in imgItems">
+    <div class="photo" v-if="photos.length" v-for="(item, index) in photos">
       <img :src="item.imgUrl">
       <span class="delete" @click="deletePhoto(index)"></span>
     </div>
-    <div class="default-add" v-if="imgItems.length < 6"></div>
+    <div class="default-add" v-if="photos.length < 6" @click="uploadImgs"></div>
   </div>
 </template>
 <script>
+import storage from '../../store/storage.js'
 export default {
-  props: ['imgItems'],
+  props: ['photos','servers'],
   data: () => ({
-
+    urls: null,
+    uploadIndex:0,
+    count:null,
+    serverItems:[]
   }),
+  created(){
+    this.count = 6-this.photos.length
+    this.serverItems=this.servers
+    // for (var i = 0; i < this.photos.length; i++) {
+    //   this.serverItems.push(this.photos[i].imgUrl)
+    // }
+  },
   methods: {
     deletePhoto (index) {
-      console.log(index)
+      this.photos.splice(index, 1)
+      this.serverItems.splice(index, 1)
+    },
+    uploadImgs () {
+      wx.chooseImage({
+        count: (6-this.photos.length), // 默认9
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success: (res) => {
+          this.urls = res.localIds;
+          this.uploadIndex = 0;
+          this.uploadItems()
+        }
+      })
+    },
+    uploadItems () {   // 上传图片
+      let url = this.urls[this.uploadIndex]
+      if(!url) return;
+      wx.uploadImage({
+        localId: url,
+        isShowProgressTips: 1,
+        success: (el) => {
+          this.uploadIndex += 1
+          let preview = {imgUrl:url}
+          this.photos.push(preview)
+          this.serverItems.push(el.serverId)
+          this.$emit('getData', this.photos, this.serverItems)
+          this.uploadItems()
+        }
+      })
     }
   }
 }
@@ -40,6 +80,7 @@ export default {
     width: 100%;
     height: 100%;
     vertical-align: middle;
+    object-fit: cover;
   }
   .delete{
     position: absolute;

@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <div class="content" @scroll="loadMore">
+    <div class="content" @scroll="loadMore" v-if="!datanull">
       <figure class="shop-img" v-if="photos.length === 1">
         <img :src="photo" :alt="ShopInfo.name" ref="img">
       </figure>
@@ -27,6 +27,9 @@
           <span class="brands" v-for="item in ShopInfo.brands">{{item.brandname}}</span>
         </div>
       </div>
+      <div v-if="ShopInfo.description">
+        <description :descript="ShopInfo.description" ></description>
+      </div>
       <section class="driving-list" v-if="ShopInfo.typeshow == '驾校'">
         <ul>
           <li v-for="item in driverList">
@@ -37,10 +40,7 @@
           <data-null :title='title' :text="text"></data-null>
         </div>
       </section>
-      <div v-if="ShopInfo.description">
-        <description :descript="ShopInfo.description" ></description>
-      </div>
-      <div class="services" v-if="business">
+      <div class="services" v-if="business && ShopInfo.typeshow !== '驾校'">
         <ul>
           <li v-for="(item, index) in ShopInfo.business" >
             <services-item :service="item"></services-item>
@@ -60,8 +60,10 @@
         </div>
       </div>
     </div>
+    <!-- 无数据提示 -->
+    <div class="datas-null" v-if="datanull">店铺信息已被隐藏，请联系官方人员</div>
     <a href="JavaScript:history.back(-1)" @click.prevent="toback"><go-back></go-back></a>
-    <div class="footer">
+    <div class="footer" v-if="!datanull">
       <shopfooter :shopinfo="ShopInfo" :photo="photo"></shopfooter>
     </div>
     <toast :msg="toast" v-if="page.toast"></toast>
@@ -103,7 +105,8 @@ export default {
       loading: false,
       toast:'',
       business:false,
-      photos:[]
+      photos:[],
+      datanull:false       // 判断接口是否有数据
     }
   },
   created () {
@@ -198,6 +201,10 @@ export default {
     },
     getDetailInfo () {                    // 通过审核店铺数据
       XHR.getShoperInfo({'shopid': this.$route.params.shopid}).then((res) => {
+        if (!res.data) {
+          this.datanull = true 
+          return 
+        }
         this.ShopInfo = res.data
         this.photos = res.data.photos
         this.$nextTick(()=>{
@@ -205,9 +212,10 @@ export default {
           if (res.data.business.length > 0) {
             this.business = true
           }
+          this.datanull = false
         })
         let c = res.data.linkcall
-        this.ShopInfo.linkcall = c.length<11 ? '' : c.substring(0,11)
+        this.ShopInfo.linkcall = c.length<10 ? '' : c.substring(0,11)
         this.photo = res.data.photo
         let typetext = res.data.typeshow
         if (typetext === '驾校') {
@@ -228,6 +236,10 @@ export default {
     },
     getDetailInfoWait () {             // 未通过审核店铺数据
       XHR.noAdoptInfo({'waiterid': this.$route.params.shopid}).then((res) => {
+        if (!res.data) {
+          this.datanull = true 
+          return 
+        }
         this.ShopInfo = res.data
         this.photos = res.data.photos
         this.$nextTick(()=>{
@@ -235,10 +247,11 @@ export default {
           if (res.data.business.length > 0) {
             this.business = true
           }
+          this.datanull = false 
         })
         // 取电话11位
         let c = res.data.linkcall
-        this.ShopInfo.linkcall = c.length<11 ? '' : c.substring(0,11)
+        this.ShopInfo.linkcall = c.length<10 ? '' : c.substring(0,11)
         this.photo = res.data.photo
         let typetext = res.data.typeshow
         if (typetext === '驾校') {
@@ -298,17 +311,13 @@ export default {
     box-sizing: border-box;
   }
   .shop-img{
-    height: 210px;
+    min-height: 180px;
     overflow: hidden;
     display: flex;
   }
   .shop-img img{
     width:100%;
     height:100%;
-    -webkit-object-fit: cover;
-    object-fit: cover;
-    display: block;
-    object-fit: cover;
   }
   .driving-list{
     border-top: 10px solid #F5F5F5;
@@ -332,7 +341,6 @@ export default {
   }
   .shop-info{ 
     border-bottom: 10px solid #F5F5F5;
-    padding-bottom: 15px;
     background: #fff
   }
   .footer{
@@ -347,6 +355,7 @@ export default {
   }
   .tags li{
     margin-right: 10px;
+    margin-bottom: 10px;
     display: inline-block;
   }
   .data-null{
@@ -429,7 +438,7 @@ export default {
   position: absolute;
   left: 15px;
   bottom: 0;
-  width: 100%;
+  right: 15px;
   height: 1px;
   border-bottom: 1px solid #e5e5e5;
   -webkit-transform-origin: 0 100%;
@@ -453,6 +462,14 @@ export default {
   letter-spacing: 0;
   line-height: 43px;
   text-align: center;
+  background: #fff;
+}
+.datas-null{
+  height: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: #fff;
 }
 </style>

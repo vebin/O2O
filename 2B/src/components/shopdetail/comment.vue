@@ -7,7 +7,7 @@
       <span>{{comment.nickName}}</span>
     </div>
     <ul class="tags">
-      <li v-for="(item,index) in comment.lables" :class="index < 3 ? 'active':'' ">{{item.lableName}}</li>
+      <li v-for="(item,index) in comment.lables" :class="item.lableTag==='1' ? 'active':'' ">{{item.lableName}}</li>
     </ul>
     <p class="commentInfo" v-if="comment.commentInfo.length">{{comment.commentInfo}}</p>
   </div>
@@ -27,16 +27,6 @@ export default {
     padding-bottom: 15px;
     position: relative;
     
-  }
-  .main::after {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    content: "";
-    width: 100%;
-    height: 1px;
-    background: #E5E5E5;
-    transform: scaleY(0.5);
   }
   .main figure {
     width: 32px;
@@ -88,5 +78,6 @@ export default {
     color: #333333;
     letter-spacing: 0;
     line-height: 24px;
+    margin-top: 12px;
   }
 </style>

@@ -15,7 +15,7 @@ export default {
     }
   },
   created () {
-    let joinInfo = JSON.parse(storage.get('data'))
+    let joinInfo = JSON.parse(storage.get('recommend'))
     if (joinInfo) {
       this.citytext = joinInfo.citytext
     }

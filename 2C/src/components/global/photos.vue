@@ -43,8 +43,9 @@ export default {
 	},
 	created() {
 		this.h = Math.round((window.innerWidth)*0.56)+'px'
+
 	},
-	mounted() {
+	mounted() {	
 	},
 	methods: {
 	}
@@ -58,7 +59,6 @@ export default {
 .swiper-slide{
 	width: 100%;
 	height: 100%;
-	min-height: 180px;
 	float: left;
 }
 .swiper-slide img{

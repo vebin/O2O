@@ -7,6 +7,7 @@
  </div>
 </template>
 <script>
+import storage from '../../store/storage.js'
 export default {
   data: () => ({
     business: ''

@@ -20,7 +20,7 @@ export default {
     page () { return this.$store.state.page }
   },
   created () {
-    let joinInfo = storage.get('data')
+    let joinInfo = storage.get('recommend')
     if (joinInfo) {
       this.page.shoptype = JSON.parse(joinInfo).shoptype
     }

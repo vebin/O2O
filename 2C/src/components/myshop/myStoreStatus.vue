@@ -51,6 +51,7 @@ export default {
     color: #333333;
     letter-spacing: 0;
     line-height: 28px;
+    margin-right: 10px;
   }
   .reject{
     color: #028DFE;
@@ -61,7 +62,7 @@ export default {
     margin-right: 15px;
     font-size: 16px;
     letter-spacing: 0;
-    line-height: 24px;
+    line-height: 28px;
     min-width: 50px;
   }
   .authentication{

@@ -70,6 +70,10 @@ const store = new Vuex.Store({
       registDesc: '',
       driverImg: '',
       status: false
+    },
+    toast: {
+      toast: false,
+      toastLock: true
     }
   },
   mutations: {
@@ -111,6 +115,11 @@ const store = new Vuex.Store({
       for (var i in json) {
         state.driver[i] = json[i]
       }
+    },
+    toggleToast (state) {
+      if (state.toast.toastLock) {
+        state.toast.toast = !state.toast.toast
+      }
     }
   },
   actions: {
@@ -140,6 +149,14 @@ const store = new Vuex.Store({
     },
     setDriver (context, json) {
       context.commit('setDriver', json)
+    },
+    toggleToast (context) {
+      context.commit('toggleToast')
+    }
+  },
+  getters: {
+    toastState: state => {
+      return state.toast.toast
     }
   }
 })

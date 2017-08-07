@@ -40,7 +40,7 @@ export default {
     position: relative;
     flex: 1;
     font-size: 18px;
-    color: #09BB07;
+    color: #FF6600;
     letter-spacing: 0;
     text-align: center;
   }
@@ -52,7 +52,7 @@ export default {
     width: 1px;
     height: 20px;
     opacity: 0.3;
-    background: #F9F9F9;
+    background: rgba(255,102,0,0.10);
   }
   .editStore:before{
     content: "\e6fd";

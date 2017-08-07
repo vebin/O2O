@@ -32,7 +32,7 @@ export default {
     }
   },
   created () {
-    let joinInfo = storage.get('data')
+    let joinInfo = storage.get('recommend')
     if (joinInfo) {
       this.selected = JSON.parse(joinInfo).shoptype
     }

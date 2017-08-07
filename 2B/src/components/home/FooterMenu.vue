@@ -23,6 +23,7 @@ export default {
     } else {
       if (document.cookie.match(/AbcfN_ajaxuid=([^;$]+)/)) {
         this.ShopData.bbsid = document.cookie.match(/AbcfN_ajaxuid=([^;$]+)/)[1]
+        this.setdata({'bbsid':this.ShopData.bbsid})
       }
     }
   },

@@ -1,6 +1,6 @@
 import fetch from './ajax'
 
-export const DEBUG = true                  // 是否开发模式
+export const DEBUG = false                  // 是否开发模式
 const HTTP_DEV = 'https://didi.360che.com/nearby-api'      // 测试地址
 const HTTPS = 'https://nearby-api.360che.com'              // 正式地址
 const URLS = DEBUG ? HTTP_DEV : HTTPS
@@ -171,6 +171,30 @@ class XHR {
   getUserNameApp (json) {
     return fetch({
       url: `http://bbs-api.360che.com/interface/app/index.php?type=user&action=UserInfo&method=simpleInfo`,
+      body: json,
+      type: 'GET'
+    })
+  }
+  // 添加主营业务
+  addMainBusiness (json) {
+    return fetch({
+      url: `${URLS}/shopin/businessin.aspx`,
+      body: json,
+      type: 'GET'
+    })
+  }
+  // 删除主营业务
+  deleteMainBusiness (json) {
+    return fetch({
+      url: `${URLS}/shopin/businessdel.aspx`,
+      body: json,
+      type: 'GET'
+    })
+  }
+   // 驾校驾照类型删除
+  deleteDriverType (json) {
+    return fetch({
+      url: `${URLS}/shopin/registerdel.aspx`,
       body: json,
       type: 'GET'
     })

@@ -108,7 +108,7 @@ export default {
       }
     },
     setdata (t) {
-      let joinInfo = storage.get('data')
+      let joinInfo = storage.get('recommend')
       if (joinInfo) {
         joinInfo = JSON.parse(joinInfo)
         for (var i in t) {
@@ -118,7 +118,7 @@ export default {
         joinInfo = t
       }
       var str=JSON.stringify(joinInfo)
-      session.setItem('data', str)
+      session.setItem('recommend', str)
     },
     uploadNewImg (source) {
       var wx = window.wx
@@ -147,7 +147,7 @@ export default {
       })
     },
     submitStatus () {
-      let joinInfo = storage.get('data')
+      let joinInfo = storage.get('recommend')
       if (joinInfo) {
         joinInfo = JSON.parse(joinInfo)
         if (joinInfo.name !== '' && joinInfo.shoptypeid !== '' && joinInfo.shoptypeshow !== '' && joinInfo.citysn !== '' && joinInfo.address !== '' && joinInfo.linkman !== '' && joinInfo.linkcall !== '' && joinInfo.shopimg !== '') {

@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     setImg () {
-     let joinInfo = storage.get('data')
+     let joinInfo = storage.get('recommend')
       if (JSON.parse(joinInfo).shopimg!=='') {
         this.page.shopimg = JSON.parse(joinInfo).shopimgPreview
         this.ShopData.shopimg  = JSON.parse(joinInfo).shopimg
@@ -86,7 +86,7 @@ export default {
 
 <style scoped>
 .header{
-  height: 210px;
+  min-height: 180px;
   width: 100%;
   position: relative;
   overflow: hidden;
@@ -101,7 +101,6 @@ export default {
   left: 0;
   top:0;
   z-index: 1;
-  object-fit: cover;
 }
 .photo{
   position: relative;

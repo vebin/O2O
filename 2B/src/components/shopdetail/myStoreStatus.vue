@@ -54,6 +54,7 @@ export default {
     flex:1;
     text-align: left;
     margin-left: 15px;
+    margin-right: 10px;
     font-size: 18px;
     color: #333333;
     letter-spacing: 0;

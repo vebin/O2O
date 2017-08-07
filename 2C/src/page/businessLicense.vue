@@ -76,19 +76,18 @@ export default {
         this.licenseInfo = res.data
         let before = res.data.before
         let after = res.data.after
-        this.year = after.checkDate.substring(0,4)
-        if ( after.checkDate.substring(5,6) === '0') {
-          this.month = after.checkDate.substring(6,7)
-        } else {
-          this.month = after.checkDate.substring(5,7)
-        }
-        if ( after.checkDate.substring(8,9) === '0') {
-          this.day = after.checkDate.substring(9,10)
-        } else {
-          this.day = after.checkDate.substring(8,10)
-        }
-        console.log(after.checkDate,636)
-        if (after.certificatesImg) {
+        if (after) {
+          this.year = after.checkDate.substring(0,4)
+          if ( after.checkDate.substring(5,6) === '0') {
+            this.month = after.checkDate.substring(6,7)
+          } else {
+            this.month = after.checkDate.substring(5,7)
+          }
+          if ( after.checkDate.substring(8,9) === '0') {
+            this.day = after.checkDate.substring(9,10)
+          } else {
+            this.day = after.checkDate.substring(8,10)
+          }
           this.uploadImg = after.certificatesImg
           if (after.auditStatus === 0) {
             this.status = 1
@@ -151,7 +150,7 @@ export default {
     padding: 30px 15px;
   }
   .business-submit span{
-    background: #09BB07;
+    background:rgba(255,102,0,1);
     border-radius: 5px;
     font-size: 16px;
     color: #FFFFFF;

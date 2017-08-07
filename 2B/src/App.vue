@@ -122,7 +122,7 @@ export default {
   margin-right: 15px;
   font-size: 14px;
   text-align: right;
-  color: #09BB07;
+  color: #FF6600;
   line-height: 14px;
   white-space: nowrap;
   border-left: 1px solid #F5F5F5;
@@ -134,7 +134,7 @@ export default {
   content: '\e693';
   right: 30px;
   top: 0;
-  color:#09BB07;
+  color:#FF6600;
 }
   .nearby-shops-model{
     background: #fff

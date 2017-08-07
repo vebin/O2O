@@ -5,8 +5,8 @@
       <span class="person-name" v-if="shopinfo.linkman">{{shopinfo.linkman}}</span>
       <span :class="(shopinfo.linkcall && !shopinfo.linkman) ? 'only-one' : 'person-phone'" v-if="shopinfo.linkcall">{{shopinfo.linkcall}}</span>
     </div>
-    <a :href="`#/Comment/${shopinfo.id}`" :class="[!shopinfo.linkcall ? 'onliy-commit' : 'to-commit']" @click.prevent="toComment">写评价</a>
-    <div :class="['share',!shopinfo.linkcall ? 'onliy-share' : '']" @click="shareThis" v-if="shareShow">分享</div>
+    <a :href="`#/Comment/${shopinfo.id}`" :class="[!shopinfo.linkcall ? 'onliy-commit' : 'to-commit']" @click.prevent="toComment" v-if="shareShow">写评价</a>
+    <div :class="['share',!shopinfo.linkcall ? 'onliy-share' : '']" @click="shareThis" v-if="shareBtn">分享</div>
   </div>
   <!-- <div class="footer">
     <div class="info" @click="tel" v-if="shopinfo.linkcall">
@@ -23,14 +23,20 @@ export default {
   props: ['shopinfo','photo'],
   data () {
     return {
-      shareShow: false
+      shareShow: false,
+      shareBtn:false      // 分享
     }
   },
   created () {
+    console.log(this.shopinfo)
     this.getWxconfig()
+    var UA = navigator.userAgent;
+    if(UA.match(/MicroMessenger/i) == 'MicroMessenger'){
+      this.shareShow = true
+    }
     if (this.setApp()!=='other') {
       this.setUserInfo()
-      this.shareShow = true
+      this.shareBtn = true
     }else{
       if (document.cookie.match(/AbcfN_ajaxuid=([^;$]+)/)) {
         this.ShopData.bbsid = document.cookie.match(/AbcfN_ajaxuid=([^;$]+)/)[1]

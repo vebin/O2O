@@ -14,7 +14,7 @@ export default {
     }
   },
   created () {
-    let joinInfo = storage.get('data')
+    let joinInfo = storage.get('recommend')
     if (joinInfo) {
       this.name = JSON.parse(joinInfo).name
     }

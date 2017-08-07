@@ -50,11 +50,10 @@ export default {
   created () {
     this.submitStatus()
     this.$store.dispatch('setEdit', {edit: false, source: '添加', 'imgStatus': `1`})
-    this.setUserInfo()
     if (this.$parent.watchSource === '/') {
       this.getIsApp()
     }
-    let joinInfo = storage.get('data')
+    let joinInfo = storage.get('recommend')
     if (joinInfo && JSON.parse(joinInfo).shoptype === '服务站') {
       this.$store.dispatch('SetshowBrand', true)
     } else {
@@ -71,6 +70,7 @@ export default {
         this.getWxconfig()
         this.hideshare()
       } else {
+        this.setUserInfo()
         this.callNativeMethod("onChangeWebTitle",{changeWebTitle:'添加商家'})
       }
     },
@@ -116,7 +116,7 @@ export default {
     submit () {                        // 提交
       if (this.page.submitStatus) {
         this.page.submitStatus = false
-        let joinInfo = JSON.parse(storage.get('data'))
+        let joinInfo = JSON.parse(storage.get('recommend'))
         let json = {
             'name':joinInfo.name,
             'shoptypeid':joinInfo.shoptypeid,

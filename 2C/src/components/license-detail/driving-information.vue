@@ -1,9 +1,9 @@
 <template>
   <div class="driving-information">
     <div class="header">
-      <strong class="price">{{detail.registerFee}}</strong>
       <i class="driving-type">{{detail.licenseText}}驾照</i><span class="name">{{detail.carType}}</span>
     </div>
+    <strong class="price" v-if="detail.registerFee">¥{{detail.registerFee}}</strong>
     <span class="time">{{detail.registDesc}}</span>
   </div>
 </template>
@@ -36,6 +36,7 @@ export default {
 .name{
   font-size: 18px;
   font-weight: bold;
+  word-break: break-all;
 }
 .driving-type{
   font-size: 14px;
@@ -47,10 +48,11 @@ export default {
   margin-right: 10px;
 }
 .price{
-  float: right;
+  float: left;
   font-size: 18px;
   color: #FD4C29;
   line-height: 28px;
+  margin-top: 10px;
 }
 .driving-line:after{
   content: " ";

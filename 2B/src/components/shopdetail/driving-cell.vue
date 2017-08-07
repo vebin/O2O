@@ -78,6 +78,16 @@ export default {
     font-size: 14px;
     color: #666666;
     line-height: 18px;
+    display: flex;
+  }
+  .footer span{
+    flex: 1;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
   }
   .footer strong{
     font-size: 18px;

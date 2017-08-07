@@ -63,7 +63,7 @@ export default {
       }
     },
     getIsGps () {          // 判断是否允许定位
-      let joinInfo = storage.get('data')        
+      let joinInfo = storage.get('recommend')        
       if (joinInfo) {
         joinInfo = JSON.parse(joinInfo)
         if(!joinInfo.lng){

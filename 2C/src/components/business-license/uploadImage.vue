@@ -1,10 +1,10 @@
 <template>
   <div class="upload" v-if="status=='0'">
     <img class="uploadImg" :src="page.certificatesimg" />
-    <span class="again-set-img" v-if="page.licenseImgstatus=='2'" @click="uploadImg">修改
+    <span class="again-set-img" v-if="page.licenseImgstatus=='2'" @click="uploadImgs">修改
       <input type="file" class="edit-input" @change="iphoneOldChange" accept="image/jpg,image/jpeg,image/png,image/gif" v-if="iphoneOld" @click.stop>
     </span>
-    <div @click="uploadImg" v-else class="photo">
+    <div @click="uploadImgs" v-else class="photo">
       <img class="addImg" :src="add" />
       <span class="uploadText">上传营业执照</span>
       <input type="file" class="upload-input" @change="iphoneOldChange" accept="image/jpg,image/jpeg,image/png,image/gif" v-if="iphoneOld" @click.stop>
@@ -130,7 +130,7 @@ export default {
           _this.checkSubmit()
       })
     },
-    uploadImg() {
+    uploadImgs() {
       if (this.setApp()==='appNew'){
         this.appUpload()
       }else if(this.setApp()==='appOld'){

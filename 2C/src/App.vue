@@ -75,13 +75,18 @@ export default {
   overflow: hidden;
 }
 .cells:after{
+  content: " ";
   position: absolute;
   left: 15px;
   bottom: 0;
-  content: "";
   width: 100%;
   height: 1px;
-  background: #E5E5E5;
+  border-bottom: 1px solid #e5e5e5;
+  color: #D9D9D9;
+  -webkit-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
 }
 .cell-title{
   font-size: 16px;
@@ -137,7 +142,7 @@ export default {
   margin-right: 15px;
   font-size: 14px;
   text-align: right;
-  color: #09BB07;
+  color: #FF6600;
   line-height: 14px;
   white-space: nowrap;
   border-left: 1px solid #F5F5F5;
@@ -149,6 +154,19 @@ export default {
   content: '\e693';
   right: 30px;
   top: 0;
-  color:#09BB07;
+  color:#FF6600;
 }
+.swiper-pagination .swiper-pagination-bullet{
+    position: relative;
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 5px;
+    background: rgba(255,255,255,0.40);
+    vertical-align: top;
+  }
+  .swiper-pagination .swiper-pagination-bullet-active{
+    background: #fff;
+  }
 </style>

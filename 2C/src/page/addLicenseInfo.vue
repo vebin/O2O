@@ -8,11 +8,11 @@
     </div>
     <div class="cells">
       <label class="cell-title">报名费用</label>
-      <input class="cell-input" type="text" placeholder="0元" :value="registerFee" @input="setPrice"/>
+      <input class="cell-input" type="tel" placeholder="0元" :value="registerFee" @input="setPrice" />
     </div>
     <div class="cells-textarea">
       <label class="cell-title cell-label">报名介绍</label>
-      <textarea class="textarea" placeholder="请输入费用具体信息(如食宿，练习时间等)" :value="registDesc" @input="setDec"></textarea>
+      <textarea class="textarea" placeholder="请输入费用具体信息(如食宿，练习时间等)" :value="registDesc" @input="setDec" maxlength="200"></textarea>
     </div>
     <div @click="complete" :class="[driver.status ? 'complete' : 'disabled complete']">完成</div>
     <loading-img v-if="page.imgloading"></loading-img>
@@ -77,6 +77,10 @@ export default {
       this.setDriverStatus()
     },
     setPrice (e) {
+      e.target.value = e.target.value
+      if (e.target.value.length>6) {
+        e.target.value = e.target.value.substring(0, 6)
+      }
       this.setdriver({'registerFee':e.target.value})
       this.registerFee = e.target.value
       this.setDriverStatus()
@@ -142,7 +146,7 @@ export default {
   }
   .complete{
     margin: 30px 15px 72px 15px;
-    background: #09BB07;
+    background: #FF6600;
     font-size: 16px;
     color: #FFFFFF;
     border-radius: 5px;
@@ -152,7 +156,7 @@ export default {
     height: 45px;
   }
   .disabled{
-    background: #09BB07;
+    background: #FF6600;
     opacity: 0.4;
   }
 </style>

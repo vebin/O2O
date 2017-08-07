@@ -15,7 +15,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
   .tips{
     background: #F63711;
     font-size: 14px;

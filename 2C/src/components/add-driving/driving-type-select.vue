@@ -79,9 +79,11 @@ export default {
   color: #666;
 }
 .driving-tab input[type="radio"]:checked + span{
-  background: #09BB07;
-  box-shadow: 0 2px 4px 0 rgba(9,187,7,0.30);
   color: #fff;
+  background: #FF6600;
+  border-color: #FF6600;
+  box-shadow: 0 2px 4px 0 rgba(255,102,0,0.30);
+  border-radius: 100px;
 }
 .label:last-child{
   margin-right: 0;

@@ -53,7 +53,12 @@ export default {
   }
 }
 </script>
-<style scoped lang="css">
+<style scoped>
+  .service-brand{
+    padding-top: 60px;
+    overflow: auto;
+    box-sizing: border-box;
+  }
   .service-brand > ul{
     padding-left: 15px;
     background: #fff;

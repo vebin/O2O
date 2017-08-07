@@ -86,7 +86,7 @@ export default {
   },
   created () {
     this.getWxconfig()
-    let joinInfo = storage.get('data')
+    let joinInfo = storage.get('recommend')
     if (!joinInfo) {
       this.setdata({'name':'','shoptypeid':'','shoptypeshow':'',"citysn":'','linkman':'','linkcall':'','shopimg':'','bbsid':'','bbsname':''})
     } else {
@@ -113,9 +113,9 @@ export default {
       } else {                       // 判断是不是客户端 进行不同的定位
         if (this.setApp()==='other') {
           this.getlocation() 
-          // this.webGetLocation() 测试
+          // this.webGetLocation()  测试
         } else {
-          this.webGetLocation()  
+          this.webGetLocation() 
           // this.getlocation()  测试
         }
       }
